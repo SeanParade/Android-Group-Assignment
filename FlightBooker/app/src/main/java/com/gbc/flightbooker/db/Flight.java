@@ -1,37 +1,41 @@
 package com.gbc.flightbooker.db;
 
+import android.arch.persistence.room.ColumnInfo;
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.PrimaryKey;
+
 /**
  * Created by nooran on 2017-12-12.
  */
-//@Entity(tableName="flight")
+@Entity(tableName="flight")
 public class Flight {
 
-    //@PrimaryKey(autoGenerate=true)
+    @PrimaryKey(autoGenerate=true)
     private int flightId = 0;
 
-    //@ColumnInfo(name="airline")
+    @ColumnInfo(name="airline")
     private String airline;
 
-    //@ColumnInfo(name="departuretime")
-    private String departureTime;
+    @ColumnInfo(name="departuretime")
+    private int departureTime;
 
-    //@ColumnInfo(name="arrivaltime")
-    private String arrivalTime;
+    @ColumnInfo(name="arrivaltime")
+    private int arrivalTime;
 
-    //@ColumnInfo(name="origin")
+    @ColumnInfo(name="origin")
     private String origin;
 
-    //@ColumnInfo(name="destination")
+    @ColumnInfo(name="destination")
     private String destination;
 
-    //@ColumnInfo(name="duration")
-    private double duration;
+    @ColumnInfo(name="duration")
+    private int duration;
 
-    //@ColumnInfo(name="cost")
+    @ColumnInfo(name="cost")
     private double cost;
 
     //overloaded constructor
-    public Flight(int flightId, String airline, String departureTime, String arrivalTime, String origin, String destination, double duration, double cost) {
+    public Flight(int flightId, String airline, int departureTime, int arrivalTime, String origin, String destination, int duration, double cost) {
         this.flightId = flightId;
         this.airline = airline;
         this.departureTime = departureTime;
@@ -43,7 +47,7 @@ public class Flight {
     }
 
     //constructor without flight id
-    public Flight(String airline, String departureTime, String arrivalTime, String origin, String destination, double duration, double cost) {
+    public Flight(String airline, int departureTime, int arrivalTime, String origin, String destination, int duration, double cost) {
         this.airline = airline;
         this.departureTime = departureTime;
         this.arrivalTime = arrivalTime;
@@ -69,19 +73,19 @@ public class Flight {
         this.airline = airline;
     }
 
-    public String getDepartureTime() {
+    public int getDepartureTime() {
         return departureTime;
     }
 
-    public void setDepartureTime(String departureTime) {
+    public void setDepartureTime(int departureTime) {
         this.departureTime = departureTime;
     }
 
-    public String getArrivalTime() {
+    public int getArrivalTime() {
         return arrivalTime;
     }
 
-    public void setArrivalTime(String arrivalTime) {
+    public void setArrivalTime(int arrivalTime) {
         this.arrivalTime = arrivalTime;
     }
 
@@ -101,11 +105,11 @@ public class Flight {
         this.destination = destination;
     }
 
-    public double getDuration() {
+    public int getDuration() {
         return duration;
     }
 
-    public void setDuration(double duration) {
+    public void setDuration(int duration) {
         this.duration = duration;
     }
 

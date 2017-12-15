@@ -1,30 +1,36 @@
 package com.gbc.flightbooker.db;
 
+import android.arch.persistence.room.ColumnInfo;
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.PrimaryKey;
+
 /**
  * Created by nooran on 2017-12-12.
  */
-//@Entity(tableName="customer")
+
+@Entity(tableName="customer")
 public class Customer {
-    //@PrimaryKey(autoGenerate=true)
+    @PrimaryKey(autoGenerate=true)
     private int customerId = 0;
 
-    //@ColumnInfo(name="firstname")
+    @ColumnInfo(name="firstname")
     private String firstName;
 
-    //@ColumnInfo(name="lastname")
+    @ColumnInfo(name="lastname")
     private String lastName;
 
-    //@ColumnInfo(name="address")
+    @ColumnInfo(name="address")
     private String address;
 
-    //@ColumnInfo(name="phone")
+    @ColumnInfo(name="phone")
     private int phone;
 
-    //@ColumnInfo(name="credit")
+    @ColumnInfo(name="credit")
     private int creditCardNumber;
 
     //overloaded constructor
-    public Customer(int customerId, String firstName, String lastName, String address, int phone, int creditCardNumber) {
+    public Customer(int customerId, String firstName, String lastName, String address, int phone, int creditCardNumber)
+    {
         this.customerId = customerId;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -34,7 +40,8 @@ public class Customer {
     }
 
     //constructor without customerId
-    public Customer(String firstName, String lastName, String address, int phone, int creditCardNumber) {
+    public Customer(String firstName, String lastName, String address, int phone, int creditCardNumber)
+    {
         this.firstName = firstName;
         this.lastName = lastName;
         this.address = address;

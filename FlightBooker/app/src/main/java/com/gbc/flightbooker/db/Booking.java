@@ -1,44 +1,55 @@
 package com.gbc.flightbooker.db;
 
-import java.util.ArrayList;
+import android.arch.persistence.room.ColumnInfo;
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.ForeignKey;
+import android.arch.persistence.room.PrimaryKey;
+
+import static android.arch.persistence.room.ForeignKey.CASCADE;
 
 /**
  * Created by nooran on 2017-12-12.
  */
-//@Entity(tableName="booking")
+@Entity(tableName="booking", foreignKeys = @ForeignKey(onDelete = CASCADE, entity = Flight.class,
+                                                       parentColumns="flightID",
+                                                       childColumns = "flight_ID"))
 public class Booking {
 
-    //@PrimaryKey(autoGenerate=true)
+    @PrimaryKey(autoGenerate=true)
     private int bookingId = 0;
 
-    //@ColumnInfo(name="customerId")
+    @ColumnInfo(name="customerId")
     private int customerId;
 
-    private int[] flightIds;
+    @ColumnInfo(name="flight_Id")
+    private int flightId;
 
-    //@ColumnInfo(name="departureDate")
+    @ColumnInfo(name="departureDate")
     private String departureDate;
 
-    //@ColumnInfo(name="arrivalDate")
+    @ColumnInfo(name="arrivalDate")
     private String arrivalDate;
 
-    //@ColumnInfo(name="totalCost")
+    @ColumnInfo(name="totalCost")
     private double totalCost;
 
+    //default contructor
+    public Booking(){}
+
     //overloaded constructor
-    public Booking(int bookingId, int customerId, int[] flightIds, String departureDate, String arrivalDate, double totalCost) {
+    public Booking(int bookingId, int customerId, int flightId, String departureDate, String arrivalDate, double totalCost) {
         this.bookingId = bookingId;
         this.customerId = customerId;
-        this.flightIds = flightIds;
+        this.flightId = flightId;
         this.departureDate = departureDate;
         this.arrivalDate = arrivalDate;
         this.totalCost = totalCost;
     }
 
     //constructor without booking id
-    public Booking(int customerId, int[] flightIds, String departureDate, String arrivalDate, double totalCost) {
+    public Booking(int customerId, int flightId, String departureDate, String arrivalDate, double totalCost) {
         this.customerId = customerId;
-        this.flightIds = flightIds;
+        this.flightId = flightId;
         this.departureDate = departureDate;
         this.arrivalDate = arrivalDate;
         this.totalCost = totalCost;
@@ -60,12 +71,12 @@ public class Booking {
         this.customerId = customerId;
     }
 
-    public int[] getFlightIds() {
-        return flightIds;
+    public int getFlightId() {
+        return flightId;
     }
 
-    public void setFlightIds(int[] flightIds) {
-        this.flightIds = flightIds;
+    public void setFlightId(int flightId) {
+        this.flightId = flightId;
     }
 
     public String getDepartureDate() {
