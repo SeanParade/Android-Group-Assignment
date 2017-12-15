@@ -11,6 +11,6 @@ Airline Ticket Booking application submitted as our teams final assignment for t
   - [ ] Layouts
   - [ ] Map inputs to objects
 - Sean
-  - [ ] Fix classes
-  - [ ] Room Database implementation
-  - [ ] Queries
+  - [x] Fix classes
+  - [x] Room Database implementation
+  - [x] Queries
