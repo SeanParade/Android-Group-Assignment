@@ -16,11 +16,11 @@ public class Flight {
     @ColumnInfo(name="airline")
     private String airline;
 
-    @ColumnInfo(name="departuretime")
-    private int departureTime;
+    @ColumnInfo(name="departure")
+    private String departureDate;
 
-    @ColumnInfo(name="arrivaltime")
-    private int arrivalTime;
+    @ColumnInfo(name="arrival")
+    private String arrivalDate;
 
     @ColumnInfo(name="origin")
     private String origin;
@@ -29,17 +29,21 @@ public class Flight {
     private String destination;
 
     @ColumnInfo(name="duration")
-    private int duration;
+    private String duration;
 
     @ColumnInfo(name="cost")
     private double cost;
 
+    @ColumnInfo(name="link")
+    private int connectingFlight=0;
+
     //overloaded constructor
-    public Flight(int flightId, String airline, int departureTime, int arrivalTime, String origin, String destination, int duration, double cost) {
+    public Flight(int flightId, String airline, String departureDate, String arrivalDate, 
+                  String origin, String destination, String duration, double cost) {
         this.flightId = flightId;
         this.airline = airline;
-        this.departureTime = departureTime;
-        this.arrivalTime = arrivalTime;
+        this.departureDate = departureDate;
+        this.arrivalDate = arrivalDate;
         this.origin = origin;
         this.destination = destination;
         this.duration = duration;
@@ -47,14 +51,40 @@ public class Flight {
     }
 
     //constructor without flight id
-    public Flight(String airline, int departureTime, int arrivalTime, String origin, String destination, int duration, double cost) {
+    public Flight(String airline, String departureDate, String arrivalDate,
+                  String origin, String destination, String duration, double cost) {
         this.airline = airline;
-        this.departureTime = departureTime;
-        this.arrivalTime = arrivalTime;
+        this.departureDate = departureDate;
+        this.arrivalDate = arrivalDate;
         this.origin = origin;
         this.destination = destination;
         this.duration = duration;
         this.cost = cost;
+    }
+    //overloaded with connecting flight
+    public Flight(int flightId, String airline, String departureTime, String arrivalTime,
+                  String origin, String destination, String duration, double cost, int connectingFlight) {
+        this.flightId = flightId;
+        this.airline = airline;
+        this.departureDate = departureTime;
+        this.arrivalDate = arrivalTime;
+        this.origin = origin;
+        this.destination = destination;
+        this.duration = duration;
+        this.cost = cost;
+        this.connectingFlight = connectingFlight;
+    }
+    //connecting flight, no flight id
+    public Flight(String airline, String departureTime, String arrivalTime,
+                  String origin, String destination, String duration, double cost, int connectingFlight) {
+        this.airline = airline;
+        this.departureDate = departureTime;
+        this.arrivalDate = arrivalTime;
+        this.origin = origin;
+        this.destination = destination;
+        this.duration = duration;
+        this.cost = cost;
+        this.connectingFlight = connectingFlight;
     }
 
     public int getFlightId() {
@@ -73,20 +103,18 @@ public class Flight {
         this.airline = airline;
     }
 
-    public int getDepartureTime() {
-        return departureTime;
+    public String getDepartureTime() {return departureDate;}
+
+    public void setDepartureTime( String departureTime) {
+        this.departureDate = departureTime;
     }
 
-    public void setDepartureTime(int departureTime) {
-        this.departureTime = departureTime;
+    public String getArrivalTime() {
+        return arrivalDate;
     }
 
-    public int getArrivalTime() {
-        return arrivalTime;
-    }
-
-    public void setArrivalTime(int arrivalTime) {
-        this.arrivalTime = arrivalTime;
+    public void setArrivalTime(String arrivalTime) {
+        this.arrivalDate = arrivalTime;
     }
 
     public String getOrigin() {
@@ -105,12 +133,11 @@ public class Flight {
         this.destination = destination;
     }
 
-    public int getDuration() {
+    public String getDuration() {
         return duration;
     }
 
-    public void setDuration(int duration) {
-        this.duration = duration;
+    public void setDuration(String duration) {this.duration = duration;
     }
 
     public double getCost() {
@@ -119,5 +146,12 @@ public class Flight {
 
     public void setCost(double cost) {
         this.cost = cost;
+    }
+
+    public int getConnectingFlight() {
+        return connectingFlight;
+    }
+    public void setConnectingFlight(int connectingFlight) {
+        this.connectingFlight = connectingFlight;
     }
 }
