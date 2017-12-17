@@ -16,9 +16,11 @@ public class FlightGenerator {
     //public final String origin1 = "Toronto, Ontario";
     //public final String origin2 = "Miami, Florida";
 
+    //list of airlines
     public final List<String> airlines = Arrays.asList("Test Jet", "Fake Airline", "Air Blanada");
 
 
+    //returns an arraylist of departure datetimes
     public ArrayList<String> departureTimes (String departure)
     {
         ArrayList<String> departureTimes = new ArrayList<String>();
@@ -34,6 +36,7 @@ public class FlightGenerator {
         }
         return departureTimes;
     }
+    //generate flights based on the origin, destination and departure date
 public ArrayList<Flight> generateFlights(String origin, String destination, String departure)
 {
     ArrayList<Flight> flights = new ArrayList<Flight>();
@@ -53,10 +56,12 @@ public ArrayList<Flight> generateFlights(String origin, String destination, Stri
 
     return flights;
 }
+//calculate arrival time based on departure datetime and duration of flight
 public String calculateArrival(String departure, String duration)
 {
     return Helper.addTime(departure, duration);
 }
+//calculate duration based on origin and destination
 public String calculateDuration(String origin, String destination)
 {
     String duration = "";
@@ -65,6 +70,7 @@ public String calculateDuration(String origin, String destination)
 
     return duration;
 }
+//calculate cost based on duration of flight and rate of airline
 public double calculateCost(String duration, String airline)
 {
     double cost = 0;
