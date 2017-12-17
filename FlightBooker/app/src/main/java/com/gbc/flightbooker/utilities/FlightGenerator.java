@@ -43,15 +43,24 @@ public ArrayList<Flight> generateFlights(String origin, String destination, Stri
     ArrayList<String> departureTimes = departureTimes(departure);
     for(String time : departureTimes)
     {
-        String duration = calculateDuration(origin, destination);
-        String arrival = calculateArrival(departure, duration);
-        String airline = airlines.get(departureTimes.indexOf(time));
-        double cost = calculateCost(duration, airline);
 
-        Flight flight = new Flight(airline, time, arrival, origin,
-                destination, duration, cost);
+        if(origin.equals("some origin") && destination.equals("some destination"))
+        {
+            //create another connecting flight
+            //add connecting flight id to original flight
+            //add flight to flights arraylist
+        }
+        else {
+            String duration = calculateDuration(origin, destination);
+            String arrival = calculateArrival(departure, duration);
+            String airline = airlines.get(departureTimes.indexOf(time));
+            double cost = calculateCost(duration, airline);
 
-        flights.add(flight);
+            Flight flight = new Flight(airline, time, arrival, origin,
+                    destination, duration, cost);
+            flights.add(flight);
+        }
+
     }
 
     return flights;
