@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.gbc.flightbooker.ViewBookingsActivity">
+    tools:context="com.gbc.flightbooker.ViewFlightInfo">
 
     <TextView
         android:id="@+id/title"
@@ -14,16 +14,16 @@
         android:layout_alignParentTop="true"
         android:background="?android:attr/colorAccent"
         android:gravity="center"
-        android:text="@string/title_view_booking"
+        android:text="View Flight"
         android:textColor="@android:color/background_light"
-        android:textSize="24sp" />
+        android:textSize="24sp"
+        tools:ignore="HardcodedText" />
 
     <ListView
-        android:id="@+id/list_bookings"
+        android:id="@+id/list_flights"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/title" />
-
 
 </RelativeLayout>

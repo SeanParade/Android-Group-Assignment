@@ -4,6 +4,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.gbc.flightbooker.db.AppDatabase;
+import com.gbc.flightbooker.utilities.BookingItemAdapter;
 
 public class UserInfoActivity extends AppCompatActivity {
 
@@ -14,5 +15,6 @@ public class UserInfoActivity extends AppCompatActivity {
         setContentView(R.layout.activity_user_info);
 
         db = AppDatabase.getDatabase(getApplicationContext());
+
     }
 }

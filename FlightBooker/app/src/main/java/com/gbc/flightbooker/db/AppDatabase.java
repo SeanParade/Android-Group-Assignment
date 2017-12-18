@@ -7,6 +7,7 @@ import android.content.Context;
 
 import com.gbc.flightbooker.db.dao.BookingDao;
 import com.gbc.flightbooker.db.dao.CustomerDao;
+import com.gbc.flightbooker.db.dao.FlightDao;
 
 /**
  * Created on 12/14/2017.
@@ -18,7 +19,7 @@ public abstract class AppDatabase extends RoomDatabase{
 
      public abstract CustomerDao customerDao();
      public abstract BookingDao bookingDao();
-     public abstract Flight flightDao();
+     public abstract FlightDao flightDao();
 
      public static AppDatabase getDatabase(Context context){
          if(INSTANCE ==null){

@@ -24,6 +24,9 @@ public class Booking {
     @ColumnInfo(name="flight_Id")
     private int flightId;
 
+    @ColumnInfo(name="flight_Header")
+    private String flightHeader;
+
     @ColumnInfo(name="departureDate")
     private String departureDate;
 
@@ -37,22 +40,26 @@ public class Booking {
     public Booking(){}
 
     //overloaded constructor
-    public Booking(int bookingId, int customerId, int flightId, String departureDate, String arrivalDate, double totalCost) {
+    public Booking(int bookingId, int customerId, int flightId, String flightHeader, String departureDate, String arrivalDate, double totalCost) {
         this.bookingId = bookingId;
         this.customerId = customerId;
         this.flightId = flightId;
+        this.flightHeader = flightHeader;
         this.departureDate = departureDate;
         this.arrivalDate = arrivalDate;
         this.totalCost = totalCost;
+
     }
 
     //constructor without booking id
-    public Booking(int customerId, int flightId, String departureDate, String arrivalDate, double totalCost) {
+    public Booking(int customerId, int flightId , String flightHeader, String departureDate, String arrivalDate, double totalCost) {
         this.customerId = customerId;
         this.flightId = flightId;
+        this.flightHeader = flightHeader;
         this.departureDate = departureDate;
         this.arrivalDate = arrivalDate;
         this.totalCost = totalCost;
+
     }
 
     public int getBookingId() {
@@ -103,4 +110,11 @@ public class Booking {
         this.totalCost = totalCost;
     }
 
+    public String getFlightHeader() {
+        return flightHeader;
+    }
+
+    public void setFlightHeader(String flightHeader) {
+        this.flightHeader = flightHeader;
+    }
 }

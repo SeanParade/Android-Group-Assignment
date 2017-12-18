@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">Flight Booker</string>
+    <string name="title_welcome">Welcome to Flight Booker!</string>
+    <string name="title_user_info">User Information</string>
+    <string name="title_view_booking">View Bookings</string>
+    <string name="book_flight">Book Flight</string>
+    <string name="view_bookings">View Bookings</string>
+    <string name="user_information">User Information</string>
 </resources>
