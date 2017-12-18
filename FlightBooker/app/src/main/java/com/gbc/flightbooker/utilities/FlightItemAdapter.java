@@ -29,6 +29,8 @@ public class FlightItemAdapter extends ArrayAdapter<Flight> {
         flightList = objects;
         inflater = LayoutInflater.from(context);
     }
+
+
     @NonNull
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
@@ -46,8 +48,8 @@ public class FlightItemAdapter extends ArrayAdapter<Flight> {
         Flight flight = flightList.get(position);
 
         tvAirline.setText(flight.getAirline());
-        tvDeparture.setText(flight.getDepartureTime());
-        tvArrival.setText(flight.getArrivalTime());
+        tvDeparture.setText(flight.getDepartureDate());
+        tvArrival.setText(flight.getArrivalDate());
         tvOrigin.setText(flight.getOrigin());
         tvDestination.setText(flight.getDestination());
         tvDuration.setText(flight.getDuration());

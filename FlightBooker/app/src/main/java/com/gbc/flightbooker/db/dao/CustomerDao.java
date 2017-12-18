@@ -18,14 +18,14 @@ import java.util.List;
 @Dao
 public interface CustomerDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insertAll(List<Customer> customer);
+    void insert(Customer customer);
 
     @Delete
     void deleteCustomer(Customer... customer);
 
     @Query("SELECT * FROM customer")
-    List<Customer> fetchAllCustomer();
+    Customer getCustomer();
 
     @Update
-    void updateCustomer();
+    void updateCustomer(Customer... customers);
 }

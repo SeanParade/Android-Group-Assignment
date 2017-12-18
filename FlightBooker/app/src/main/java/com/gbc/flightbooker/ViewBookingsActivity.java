@@ -1,5 +1,6 @@
 package com.gbc.flightbooker;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -13,7 +14,7 @@ import com.gbc.flightbooker.utilities.BookingItemAdapter;
 
 import java.util.List;
 
-public class ViewBookingsActivity extends AppCompatActivity {
+public class ViewBookingsActivity extends Activity {
 
     AppDatabase db;
     List<Booking> bookingList;

@@ -2,6 +2,7 @@ package com.gbc.flightbooker.db;
 
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
 
 /**
@@ -16,10 +17,10 @@ public class Flight {
     @ColumnInfo(name="airline")
     private String airline;
 
-    @ColumnInfo(name="departure")
+    @ColumnInfo(name="departureDate")
     private String departureDate;
 
-    @ColumnInfo(name="arrival")
+    @ColumnInfo(name="arrivalDate")
     private String arrivalDate;
 
     @ColumnInfo(name="origin")
@@ -34,10 +35,13 @@ public class Flight {
     @ColumnInfo(name="cost")
     private double cost;
 
-    @ColumnInfo(name="link")
+    @ColumnInfo(name="connectingFlight")
     private int connectingFlight=0;
 
+    public Flight(){}
+
     //overloaded constructor
+    @Ignore
     public Flight(int flightId, String airline, String departureDate, String arrivalDate, 
                   String origin, String destination, String duration, double cost) {
         this.flightId = flightId;
@@ -50,7 +54,9 @@ public class Flight {
         this.cost = cost;
     }
 
+
     //constructor without flight id
+    @Ignore
     public Flight(String airline, String departureDate, String arrivalDate,
                   String origin, String destination, String duration, double cost) {
         this.airline = airline;
@@ -61,7 +67,9 @@ public class Flight {
         this.duration = duration;
         this.cost = cost;
     }
+
     //overloaded with connecting flight
+    @Ignore
     public Flight(int flightId, String airline, String departureTime, String arrivalTime,
                   String origin, String destination, String duration, double cost, int connectingFlight) {
         this.flightId = flightId;
@@ -74,12 +82,14 @@ public class Flight {
         this.cost = cost;
         this.connectingFlight = connectingFlight;
     }
+
     //connecting flight, no flight id
-    public Flight(String airline, String departureTime, String arrivalTime,
+    @Ignore
+    public Flight(String airline, String departureDate, String arrivalDate,
                   String origin, String destination, String duration, double cost, int connectingFlight) {
         this.airline = airline;
-        this.departureDate = departureTime;
-        this.arrivalDate = arrivalTime;
+        this.departureDate = departureDate;
+        this.arrivalDate = arrivalDate;
         this.origin = origin;
         this.destination = destination;
         this.duration = duration;
@@ -103,18 +113,18 @@ public class Flight {
         this.airline = airline;
     }
 
-    public String getDepartureTime() {return departureDate;}
+    public String getDepartureDate() {return departureDate;}
 
-    public void setDepartureTime( String departureTime) {
-        this.departureDate = departureTime;
+    public void setDepartureDate( String departureDate) {
+        this.departureDate = departureDate;
     }
 
-    public String getArrivalTime() {
+    public String getArrivalDate() {
         return arrivalDate;
     }
 
-    public void setArrivalTime(String arrivalTime) {
-        this.arrivalDate = arrivalTime;
+    public void setArrivalDate(String arrivalDate) {
+        this.arrivalDate = arrivalDate;
     }
 
     public String getOrigin() {
@@ -137,8 +147,7 @@ public class Flight {
         return duration;
     }
 
-    public void setDuration(String duration) {this.duration = duration;
-    }
+    public void setDuration(String duration) {this.duration = duration;}
 
     public double getCost() {
         return cost;
@@ -151,6 +160,7 @@ public class Flight {
     public int getConnectingFlight() {
         return connectingFlight;
     }
+
     public void setConnectingFlight(int connectingFlight) {
         this.connectingFlight = connectingFlight;
     }

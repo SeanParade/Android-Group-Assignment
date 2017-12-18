@@ -1,11 +1,12 @@
 package com.gbc.flightbooker;
 
+import android.app.Activity;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.gbc.flightbooker.db.AppDatabase;
 
-public class FlightSelectionActivity extends AppCompatActivity {
+public class FlightSelectionActivity extends Activity {
 
     AppDatabase db;
     @Override
