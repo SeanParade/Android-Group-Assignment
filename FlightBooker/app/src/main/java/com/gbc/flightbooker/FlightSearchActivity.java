@@ -6,14 +6,14 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CalendarView;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import com.gbc.flightbooker.utilities.Helper;
 import com.gbc.flightbooker.db.AppDatabase;
-import com.gbc.flightbooker.utilities.FlightGenerator;
 
+import java.util.Calendar;
 import java.util.Date;
 
 
@@ -21,9 +21,9 @@ import java.util.Date;
 public class FlightSearchActivity extends Activity {
 
     AppDatabase db;
-    EditText e1,e2;
-    String e1Txt, e2Txt;
-    CalendarView cal;
+    EditText origin, destination;
+    String originTxt, destinationTxt;
+    DatePicker datePicker;
     Date departureDate;
     Button searchBtn;
     Date d;
@@ -37,11 +37,11 @@ public class FlightSearchActivity extends Activity {
 
         db = AppDatabase.getDatabase(getApplicationContext());
 
-        e1 = findViewById(0);
-        e1Txt =  Helper.txtFromEditText(e1);
-        e2 = findViewById(0);
-        e2Txt =  Helper.txtFromEditText(e2);
-        cal = findViewById(0);
+        origin = findViewById(0);
+        originTxt =  Helper.txtFromEditText(origin);
+        destination = findViewById(0);
+        destinationTxt =  Helper.txtFromEditText(destination);
+        datePicker = findViewById(0);
         d = new Date();
 
 
@@ -49,12 +49,12 @@ public class FlightSearchActivity extends Activity {
             @Override
             public void onClick(View v) {
                 Log.d("Flight Search Activity\n", "Search button pressed");
-                departureDate = new Date(cal.getDate());
+                departureDate = getPickerDate(datePicker);
                 feedback = "";
 
-                if(e1Txt.isEmpty())
+                if(originTxt.isEmpty())
                     feedback = "Origin City is Empty! ";
-                if(e2Txt.isEmpty())
+                if(destinationTxt.isEmpty())
                     feedback += "Destination City Empty! ";
                 if (d.after(departureDate))
                     feedback += "Departure date is before today! ";
@@ -73,5 +73,16 @@ public class FlightSearchActivity extends Activity {
             }
         });
 
+    }
+
+    public static Date getPickerDate (DatePicker datePicker ) {
+        int day = datePicker.getDayOfMonth();
+        int month = datePicker.getMonth();
+        int year = datePicker.getYear();
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(year, month, day);
+
+        return calendar.getTime();
     }
 }
