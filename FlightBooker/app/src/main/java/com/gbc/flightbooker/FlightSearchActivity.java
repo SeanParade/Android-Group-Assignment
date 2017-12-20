@@ -11,12 +11,11 @@ import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
+import com.gbc.flightbooker.db.AppDatabase;
 import com.gbc.flightbooker.db.Flight;
 import com.gbc.flightbooker.utilities.FlightGenerator;
 import com.gbc.flightbooker.utilities.Helper;
-import com.gbc.flightbooker.db.AppDatabase;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -39,13 +38,11 @@ public class FlightSearchActivity extends Activity {
         setContentView(R.layout.activity_flight_search);
 
         db = AppDatabase.getDatabase(getApplicationContext());
-
         origin = findViewById(R.id.edit_origin);
-        originTxt =  Helper.txtFromEditText(origin);
         destination = findViewById(R.id.edit_destination);
-        destinationTxt =  Helper.txtFromEditText(destination);
         datePicker = findViewById(R.id.date_picker);
         sortByRadioGroup = findViewById(R.id.radio_group);
+        searchBtn = findViewById(R.id.submit_button);
 
         d = new Date();
 
@@ -54,12 +51,14 @@ public class FlightSearchActivity extends Activity {
             @Override
             public void onClick(View v) {
                 Log.d("Flight Search Activity\n", "Search button pressed");
+                originTxt =  Helper.txtFromEditText(origin);
+                destinationTxt =  Helper.txtFromEditText(destination);
                 departureDate = getPickerDate(datePicker);
                 feedback = "";
 
-                if(originTxt.isEmpty())
+                if(originTxt.equals(""))
                     feedback = "Origin City is Empty! ";
-                if(destinationTxt.isEmpty())
+                if(destinationTxt.equals(""))
                     feedback += "Destination City Empty! ";
                 if (d.after(departureDate))
                     feedback += "Departure date is before today! ";
@@ -74,13 +73,16 @@ public class FlightSearchActivity extends Activity {
 
                         if(existingFlights.isEmpty()){
                             db.flightDao().insertAll(flights);
-                            Log.d("Flight Search Activity", "Flights inserted.");
+                            Log.d("FlightSearchActivity", "Flights inserted.");
                         }
 
                         startActivity(new Intent(v.getContext(), FlightSelectionActivity.class));
 
                     }catch (Exception e){
-                        Toast.makeText(FlightSearchActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(FlightSearchActivity.this, "Something went wrong", Toast.LENGTH_SHORT).show();
+                        Log.d("FlightSearchActivity", "Exception :( \n" + e.getMessage());
+                        Log.d("FlightSearchActivity", "Exception :( \n" + e.getCause());
+                        Log.d("FlightSearchActivity", "Exception :( \n" + e.getClass());
                     }
 
                 }

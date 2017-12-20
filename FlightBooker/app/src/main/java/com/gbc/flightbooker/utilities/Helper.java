@@ -80,7 +80,7 @@ public class Helper {
     public static int[] timeSplit(String time)
     {
         String [] timeStrings = time.split(":");
-        int [] times = new int[1];
+        int [] times = new int[2];
         for(int i =0; i<2; i++)
         {
             times[i] = Integer.parseInt(timeStrings[i]);

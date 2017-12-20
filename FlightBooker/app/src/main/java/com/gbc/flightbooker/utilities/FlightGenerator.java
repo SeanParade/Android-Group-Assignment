@@ -1,5 +1,7 @@
 package com.gbc.flightbooker.utilities;
 
+import android.util.Log;
+
 import com.gbc.flightbooker.db.Flight;
 import com.gbc.flightbooker.utilities.Helper;
 
@@ -29,8 +31,8 @@ public class FlightGenerator {
 
     //returns an arraylist of departure datetimes
     private static ArrayList<Date> departureTimes(Date departure) {
-        ArrayList<Date> departureDates = new ArrayList<Date>();
-        ArrayList<String> times = new ArrayList<String>();
+        ArrayList<Date> departureDates = new ArrayList<>();
+        ArrayList<String> times = new ArrayList<>();
         times.add("08:00");
         times.add("10:30");
         times.add("14:30");
@@ -43,22 +45,30 @@ public class FlightGenerator {
 
     //generate flights based on the origin, destination and departure date
     public static ArrayList<Flight> generateFlights(String origin, String destination, Date departure) throws Exception{
-        ArrayList<Flight> flights = new ArrayList<Flight>();
+        ArrayList<Flight> flights = new ArrayList<>();
 
         // checks if origin is Toronto, then swaps it for a formatted constant
-        if(origin.equalsIgnoreCase(ORIGIN.substring( 0, origin.length()-1)))
+        if(origin.equalsIgnoreCase(ORIGIN.substring( 0, origin.length())))
             origin = ORIGIN;
-        else
+        else{
+            Log.d("Flight Generator", "Origin entry: " + origin +
+                    "\nOrigin:" +ORIGIN.substring( 0, origin.length()));
             throw new Exception("Flights from that origin aren't currently supported");
+        }
+
 
         // checks if origin is Chicago, then swaps it for a formatted constant
-        if(destination.equalsIgnoreCase(DESTIN1.substring( 0, destination.length()-1)))
+        if(destination.equalsIgnoreCase(DESTIN1.substring( 0, destination.length())))
             destination = DESTIN1;
         // checks if origin is Miami, then swaps it for a formatted constant
-        else if(destination.equalsIgnoreCase(DESTIN2.substring( 0, destination.length()-1)))
+        else if(destination.equalsIgnoreCase(DESTIN2.substring( 0, destination.length())))
             destination = DESTIN2;
-        else
-            throw new Exception("Flights to that destination aren't currently supported");
+        else{
+            Log.d("Flight Generator", "Destination entry: " + origin +
+                    "\nDestination 1:" + DESTIN1.substring( 0, origin.length()) +
+                    "\nDestination 2:" + DESTIN2.substring( 0, origin.length()));
+            throw new Exception("Flights to that Destination aren't currently supported");
+        }
 
 
         ArrayList<Date> departureTimes = departureTimes(departure);
