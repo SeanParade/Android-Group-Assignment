@@ -39,20 +39,24 @@ public class FlightSelectionActivity extends Activity {
 
     if(isSortedByCost)
     {
-        //get flights from database sorted by cost
+        //get flights from database with date sorted by cost
         //flights =
     }
     else if(isSortedByDuration)
     {
-        //get flights from database sorted by duration
+        //get flights from database with date sorted by duration
         //flights =
+    }
+    else//unsorted
+    {
+        //get all flights with destination and date
     }
 
     //get Listview
         expListView = (ExpandableListView)findViewById(R.id.expFlightList);
     //put flights into function that populates the expandable list view
 
-        //prepareListData(flights);
+        prepareListData(flights);
 
         listAdapter = new ExpandableFlightListAdapter(this, flightHeader, flightChild);
         expListView.setAdapter(listAdapter);
@@ -65,20 +69,45 @@ public class FlightSelectionActivity extends Activity {
 
         for( Flight flight: flights)
         {
+            List<String> flightDetails = new ArrayList<String>();
+            String flightHeaderString = "";
             if(flight.getConnectingFlight()!=0) //if flight has a connecting flight
             {
-                //pseudocode
-                //String flightHeader = Toronto to Miami + other details
-                //add to flightHeader
+                //get connecting flight from database
+                Flight connectingFlight = db.flightDao().fetchFlightByID(flight.getConnectingFlight()).get(0);
+
+                //gen header string
+                flightHeaderString = connectingFlightHeader(flight, connectingFlight);
+                //add string to flightheader arraylist
+                flightHeader.add(flightHeaderString);
+
+                //add flight details for both flights to second list
+                flightDetails.add(flight.getFlightDetail());
+                flightDetails.add(connectingFlight.getFlightDetail());
 
             }
             else
             {
-                //pseudocode
-                //flightHeader.add(flight.flightHeaderString())
+                //gen string flight header
+                flightHeaderString = flight.getFlightHeader();
+                //add to flightheader arraylist
+                flightHeader.add(flightHeaderString);
+                //add flight details to second list
+                flightDetails.add(flight.getFlightDetail());
+
             }
-            //add flight data to second List, add list to hashmap
+            //add second list to hashmap
+            flightChild.put(flightHeaderString, flightDetails);
         }
+    }
+
+    private String connectingFlightHeader(Flight flight1, Flight flight2)
+    {
+        Double cost = flight1.getCost() + flight2.getCost();
+        String duration = "04:30:00";
+        String header = "From ";
+        header += flight1.getOrigin() + " To " + flight2.getDestination() + " Duration: " + duration + " Cost: " + cost;
+        return header;
     }
 
 }
