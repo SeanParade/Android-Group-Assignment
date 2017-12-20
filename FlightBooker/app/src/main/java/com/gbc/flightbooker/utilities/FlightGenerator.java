@@ -5,6 +5,7 @@ import com.gbc.flightbooker.utilities.Helper;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -27,22 +28,21 @@ public class FlightGenerator {
 
 
     //returns an arraylist of departure datetimes
-    private static ArrayList<String> departureTimes(String departure) {
-        ArrayList<String> departureTimes = new ArrayList<String>();
-
+    private static ArrayList<Date> departureTimes(Date departure) {
+        ArrayList<Date> departureDates = new ArrayList<Date>();
         ArrayList<String> times = new ArrayList<String>();
         times.add("08:00");
         times.add("10:30");
         times.add("14:30");
 
         for (String time : times) {
-            departureTimes.add(Helper.addTime(departure, time));
+            departureDates.add(Helper.addTime(departure, time));
         }
-        return departureTimes;
+        return departureDates;
     }
 
     //generate flights based on the origin, destination and departure date
-    public static ArrayList<Flight> generateFlights(String origin, String destination, String departure) throws Exception{
+    public static ArrayList<Flight> generateFlights(String origin, String destination, Date departure) throws Exception{
         ArrayList<Flight> flights = new ArrayList<Flight>();
 
         // checks if origin is Toronto, then swaps it for a formatted constant
@@ -61,15 +61,17 @@ public class FlightGenerator {
             throw new Exception("Flights to that destination aren't currently supported");
 
 
-        ArrayList<String> departureTimes = departureTimes(departure);
-        for (String time : departureTimes) {
+        ArrayList<Date> departureTimes = departureTimes(departure);
+        for (Date time : departureTimes) {
 
             String duration = calculateDuration(origin, destination);
-            String arrival = calculateArrival(departure, duration);
+            Date arrival = calculateArrival(departure, duration);
             String airline = airlines.get(departureTimes.indexOf(time));
+            //Date arrivalDate = Helper.stringToDate(arrival);
+            //Date departureDate = Helper.stringToDate(time);
             double cost = calculateCost(duration, airline);
 
-            Flight flight = new Flight(airline, time, arrival, origin,
+            Flight flight = new Flight(airline, departure, arrival, origin,
                     destination, duration, cost);
             flights.add(flight);
         }
@@ -77,7 +79,7 @@ public class FlightGenerator {
     }
 
     //calculate arrival time based on departure datetime and duration of flight
-    private static String calculateArrival(String departure, String duration) {
+    private static Date calculateArrival(Date departure, String duration) {
         return Helper.addTime(departure, duration);
     }
 

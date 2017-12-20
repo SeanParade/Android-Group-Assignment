@@ -29,15 +29,14 @@ public class Helper {
     }
 
     //add time to a date
-    public static String addTime(String dateString, String time)
+    public static Date addTime(Date date, String time)
     {
-        Date date = stringToDate(dateString);
         Calendar cal = Calendar.getInstance();
         cal.setTime(date);
         int [] times = timeSplit(time);
         cal.add(Calendar.HOUR, times[0]);
         cal.add(Calendar.MINUTE, times[1]);
-        return calToString(cal);
+        return cal.getTime();
     }
 
     //convert from string to date
