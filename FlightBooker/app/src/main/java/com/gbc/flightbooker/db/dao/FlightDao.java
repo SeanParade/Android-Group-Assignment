@@ -28,8 +28,8 @@ public interface FlightDao {
     @Query("SELECT * FROM flight WHERE flightId = :id")
     List<Flight> fetchFlightByID(int id);
 
-    @Query("SELECT * from flight WHERE destination= :destination AND departureDate BETWEEN :start AND :end")
-    List<Flight> fetchFlightByCityDate(String destination, Date start, Date end);
+    @Query("SELECT * from flight WHERE destination= :destination AND departureDate BETWEEN date(:start) AND date(:end)")
+    List<Flight> fetchFlightByCityDate(String destination, String start, String end);
 
     @Query("Delete FROM flight WHERE flightId = :id")
     void deleteFlightByID(int id);
