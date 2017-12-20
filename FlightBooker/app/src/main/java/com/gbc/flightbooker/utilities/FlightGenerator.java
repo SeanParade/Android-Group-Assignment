@@ -14,22 +14,20 @@ import java.util.List;
 public class FlightGenerator {
 
     //origin cities
-    public final String ORIGIN1 = "Toronto, Canada";
-    public final String ORIGIN2 = "Philadelphia, U.S.A.";
+    private static final String ORIGIN = "Toronto, Ontario";
     //destination cities
-    public final String DESTIN1 = "Miami, U.S.A.";
-    public final String DESTIN2 = "Chicago, U.S.A.";
-    public final String DESTIN3 = "Los Angeles, U.S.A.";
+    private static final String DESTIN1 = "Chicago, Illinois";
+    private static final String DESTIN2 = "Miami, Florida";
     //airlines
-    public final String AIRLINE1 = "Test Jet";
-    public final String AIRLINE2 = "Air Blanada";
-    public final String AIRLINE3 = "Fake Airline";
+    private static final String AIRLINE1 = "Test Jet";
+    private static final String AIRLINE2 = "Air Blanada";
+    private static final String AIRLINE3 = "Fake Airline";
     //list of airlines
-    public final List<String> airlines = Arrays.asList(AIRLINE1, AIRLINE2, AIRLINE3);
+    private static final List<String> airlines = Arrays.asList(AIRLINE1, AIRLINE2, AIRLINE3);
 
 
     //returns an arraylist of departure datetimes
-    public ArrayList<String> departureTimes(String departure) {
+    private static ArrayList<String> departureTimes(String departure) {
         ArrayList<String> departureTimes = new ArrayList<String>();
 
         ArrayList<String> times = new ArrayList<String>();
@@ -44,8 +42,25 @@ public class FlightGenerator {
     }
 
     //generate flights based on the origin, destination and departure date
-    public ArrayList<Flight> generateFlights(String origin, String destination, String departure) {
+    public static ArrayList<Flight> generateFlights(String origin, String destination, String departure) throws Exception{
         ArrayList<Flight> flights = new ArrayList<Flight>();
+
+        // checks if origin is Toronto, then swaps it for a formatted constant
+        if(origin.equalsIgnoreCase(ORIGIN.substring( 0, origin.length()-1)))
+            origin = ORIGIN;
+        else
+            throw new Exception("Flights from that origin aren't currently supported");
+
+        // checks if origin is Chicago, then swaps it for a formatted constant
+        if(destination.equalsIgnoreCase(DESTIN1.substring( 0, destination.length()-1)))
+            destination = DESTIN1;
+        // checks if origin is Miami, then swaps it for a formatted constant
+        else if(destination.equalsIgnoreCase(DESTIN2.substring( 0, destination.length()-1)))
+            destination = DESTIN2;
+        else
+            throw new Exception("Flights to that destination aren't currently supported");
+
+
         ArrayList<String> departureTimes = departureTimes(departure);
         for (String time : departureTimes) {
 
@@ -57,43 +72,37 @@ public class FlightGenerator {
             Flight flight = new Flight(airline, time, arrival, origin,
                     destination, duration, cost);
             flights.add(flight);
-
         }
         return flights;
     }
 
     //calculate arrival time based on departure datetime and duration of flight
-    public String calculateArrival(String departure, String duration) {
+    private static String calculateArrival(String departure, String duration) {
         return Helper.addTime(departure, duration);
     }
 
     //calculate duration based on origin and destination
-    public String calculateDuration(String origin, String destination) {
+    private static String calculateDuration(String origin, String destination) {
         String duration = "";
         //if statements to determine duration
-        if (origin.equals(ORIGIN1) && destination.equals(DESTIN1))//toronto to miami
+        if (origin.equals(ORIGIN) && destination.equals(DESTIN1)) //toronto to chicago
         {
             //3 hours 15 minutes
-            duration = "03:15:00";
-        } else if (origin.equals(ORIGIN1) && destination.equals(DESTIN2)) //toronto to chicago
+            duration = "01:20:00";
+        } else if (origin.equals(ORIGIN) && destination.equals(DESTIN2)) //toronto to Miami
         {
             //4 hours 30 minutes
             duration = "04:30:00";
-        } else if (origin.equals(ORIGIN2) && destination.equals(DESTIN3)) //phili to LA
+        } else if (origin.equals(DESTIN1) && destination.equals(DESTIN2)) //chicago to miami
         {
-            //6 hours 25 minutes
-            duration = "06:25:00";
-        } else //toronto to phili
-        {
-            //1 hour 30 minutes
-            duration = "01:30:00";
+            //3 hours 00 minutes
+            duration = "03:00:00";
         }
-
         return duration;
     }
 
     //calculate cost based on duration of flight and rate of airline
-    public double calculateCost(String duration, String airline) {
+    private static double calculateCost(String duration, String airline) {
         double cost = 0;
         int rate = 0;
         int[] times = Helper.timeSplit(duration);
@@ -105,10 +114,9 @@ public class FlightGenerator {
         } else {
             rate = 35;
         }
+
         //multiply hours by rate
         cost = times[0] * rate;
         return cost;
     }
-
-
 }

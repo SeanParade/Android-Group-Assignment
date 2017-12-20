@@ -1,12 +1,7 @@
 package com.gbc.flightbooker.utilities;
 
-<<<<<<< HEAD
-=======
+import android.util.Log;
 import android.widget.EditText;
-
-import com.gbc.flightbooker.db.Flight;
->>>>>>> 647a9bf342c1ebb46f776343a0347a6e8a952794
-
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.util.Calendar;
@@ -51,7 +46,7 @@ public class Helper {
         }
         catch(ParseException e)
         {
-            //do nothing?
+            Log.d("Helper class\n", "stringToTime caught an error: " + e.getMessage());
         }
         return date;
     }
@@ -65,7 +60,7 @@ public class Helper {
         }
         catch(ParseException e)
         {
-            //do nothing
+            Log.d("Helper class\n", "stringToTime caught an error: " + e.getMessage());
         }
         return date;
     }

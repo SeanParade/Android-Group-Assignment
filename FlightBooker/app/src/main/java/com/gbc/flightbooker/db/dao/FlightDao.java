@@ -18,6 +18,9 @@ public interface FlightDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertAll(List<Flight> flight);
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    void insert(Flight flight);
+
     @Delete
     void deleteFlights(Flight... flights);
 
