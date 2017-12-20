@@ -8,26 +8,29 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.RadioGroup;
 import android.widget.Toast;
 
+import com.gbc.flightbooker.db.Flight;
+import com.gbc.flightbooker.utilities.FlightGenerator;
 import com.gbc.flightbooker.utilities.Helper;
 import com.gbc.flightbooker.db.AppDatabase;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-
+import java.util.List;
 
 
 public class FlightSearchActivity extends Activity {
 
     AppDatabase db;
     EditText origin, destination;
-    String originTxt, destinationTxt;
+    String originTxt, destinationTxt, feedback;
     DatePicker datePicker;
-    Date departureDate;
+    Date departureDate, d;
     Button searchBtn;
-    Date d;
-    String feedback;
+    RadioGroup sortByRadioGroup;
 
 
     @Override
@@ -37,11 +40,13 @@ public class FlightSearchActivity extends Activity {
 
         db = AppDatabase.getDatabase(getApplicationContext());
 
-        origin = findViewById(0);
+        origin = findViewById(R.id.edit_origin);
         originTxt =  Helper.txtFromEditText(origin);
-        destination = findViewById(0);
+        destination = findViewById(R.id.edit_destination);
         destinationTxt =  Helper.txtFromEditText(destination);
-        datePicker = findViewById(0);
+        datePicker = findViewById(R.id.date_picker);
+        sortByRadioGroup = findViewById(R.id.radio_group);
+
         d = new Date();
 
 
@@ -64,11 +69,20 @@ public class FlightSearchActivity extends Activity {
                             feedback, Toast.LENGTH_SHORT).show();
                 }else {
                     try{
+                        List<Flight> flights = FlightGenerator.generateFlights(originTxt, destinationTxt, departureDate);
+                        List<Flight> existingFlights = db.flightDao().fetchFlightByCityDate(originTxt, departureDate.toString());
+
+                        if(existingFlights.isEmpty()){
+                            db.flightDao().insertAll(flights);
+                            Log.d("Flight Search Activity", "Flights inserted.");
+                        }
+
+                        startActivity(new Intent(v.getContext(), FlightSelectionActivity.class));
 
                     }catch (Exception e){
                         Toast.makeText(FlightSearchActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
                     }
-                    startActivity(new Intent(v.getContext(), FlightSelectionActivity.class));
+
                 }
             }
         });
