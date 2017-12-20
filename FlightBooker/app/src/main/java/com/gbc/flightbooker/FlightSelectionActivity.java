@@ -52,7 +52,7 @@ public class FlightSelectionActivity extends Activity {
         expListView = (ExpandableListView)findViewById(R.id.expFlightList);
     //put flights into function that populates the expandable list view
 
-        //prepareListData(flights);
+        prepareListData(flights);
 
         listAdapter = new ExpandableFlightListAdapter(this, flightHeader, flightChild);
         expListView.setAdapter(listAdapter);
@@ -69,22 +69,41 @@ public class FlightSelectionActivity extends Activity {
             String flightHeaderString = "";
             if(flight.getConnectingFlight()!=0) //if flight has a connecting flight
             {
-                flightHeaderString = flight.getConnectingFlightHeader();
+                //get connecting flight from database
+                Flight connectingFlight = db.flightDao().fetchFlightByID(flight.getConnectingFlight()).get(0);
+
+                //gen header string
+                flightHeaderString = connectingFlightHeader(flight, connectingFlight);
+                //add string to flightheader arraylist
                 flightHeader.add(flightHeaderString);
 
                 //add flight details for both flights to second list
+                flightDetails.add(flight.getFlightDetail());
+                flightDetails.add(connectingFlight.getFlightDetail());
 
             }
             else
             {
+                //gen string flight header
                 flightHeaderString = flight.getFlightHeader();
+                //add to flightheader arraylist
                 flightHeader.add(flightHeaderString);
+                //add flight details to second list
                 flightDetails.add(flight.getFlightDetail());
 
             }
             //add second list to hashmap
             flightChild.put(flightHeaderString, flightDetails);
         }
+    }
+
+    private String connectingFlightHeader(Flight flight1, Flight flight2)
+    {
+        Double cost = flight1.getCost() + flight2.getCost();
+        String duration = "04:30:00";
+        String header = "From ";
+        header += flight1.getOrigin() + " To " + flight2.getDestination() + " Duration: " + duration + " Cost: " + cost;
+        return header;
     }
 
 }

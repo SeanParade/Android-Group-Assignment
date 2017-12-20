@@ -182,16 +182,6 @@ public class Flight {
     }
 
     @Ignore
-    public String getConnectingFlightHeader()
-    {
-        String header = "From ";
-        String duration = "04:30:00";
-        double cost = FlightGenerator.calculateCost(duration, this.getAirline());
-        header += "Toronto to Miami" + " Duration: " +  duration + " Cost: $" + cost;
-        return header;
-    }
-
-    @Ignore
     public String getFlightDetail()
     {
         String detail = "";
