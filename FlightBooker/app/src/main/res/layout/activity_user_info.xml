@@ -31,7 +31,7 @@ tools:context="com.gbc.flightbooker.UserInfoActivity">
         android:textSize="12sp" />
 
     <EditText
-        android:id="@+id/edit_origin"
+        android:id="@+id/edit_first_name"
         android:layout_width="250dp"
         android:layout_height="wrap_content"
         android:layout_alignStart="@+id/textView"

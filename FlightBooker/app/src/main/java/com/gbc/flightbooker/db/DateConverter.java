@@ -31,5 +31,21 @@ public class DateConverter {
             return null;
         }
     }
+    @TypeConverter
+    public static String fromDate(Date value)
+    {
+        String dateString = "";
+        if(value!=null)
+        {
+            try{
+                dateString = df.format(value);
+            }
+            catch(Exception e)
+            {
+                return dateString;
+            }
 
+        }
+        return dateString;
+    }
 }
