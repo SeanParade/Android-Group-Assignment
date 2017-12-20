@@ -65,19 +65,25 @@ public class FlightSelectionActivity extends Activity {
 
         for( Flight flight: flights)
         {
+            List<String> flightDetails = new ArrayList<String>();
+            String flightHeaderString = "";
             if(flight.getConnectingFlight()!=0) //if flight has a connecting flight
             {
-                //pseudocode
-                //String flightHeader = Toronto to Miami + other details
-                //add to flightHeader
+                flightHeaderString = flight.getConnectingFlightHeader();
+                flightHeader.add(flightHeaderString);
+
+                //add flight details for both flights to second list
 
             }
             else
             {
-                //pseudocode
-                //flightHeader.add(flight.flightHeaderString())
+                flightHeaderString = flight.getFlightHeader();
+                flightHeader.add(flightHeaderString);
+                flightDetails.add(flight.getFlightDetail());
+
             }
-            //add flight data to second List, add list to hashmap
+            //add second list to hashmap
+            flightChild.put(flightHeaderString, flightDetails);
         }
     }
 
