@@ -4,6 +4,9 @@ import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
+import android.arch.persistence.room.TypeConverters;
+
+import java.util.Date;
 
 /**
  * Created by nooran on 2017-12-12.
@@ -18,10 +21,12 @@ public class Flight {
     private String airline;
 
     @ColumnInfo(name="departureDate")
-    private String departureDate;
+    @TypeConverters({DateConverter.class})
+    private Date departureDate;
 
     @ColumnInfo(name="arrivalDate")
-    private String arrivalDate;
+    @TypeConverters({DateConverter.class})
+    private Date arrivalDate;
 
     @ColumnInfo(name="origin")
     private String origin;
@@ -42,7 +47,7 @@ public class Flight {
 
     //overloaded constructor
     @Ignore
-    public Flight(int flightId, String airline, String departureDate, String arrivalDate, 
+    public Flight(int flightId, String airline, Date departureDate, Date arrivalDate,
                   String origin, String destination, String duration, double cost) {
         this.flightId = flightId;
         this.airline = airline;
@@ -57,7 +62,7 @@ public class Flight {
 
     //constructor without flight id
     @Ignore
-    public Flight(String airline, String departureDate, String arrivalDate,
+    public Flight(String airline, Date departureDate, Date arrivalDate,
                   String origin, String destination, String duration, double cost) {
         this.airline = airline;
         this.departureDate = departureDate;
@@ -70,7 +75,7 @@ public class Flight {
 
     //overloaded with connecting flight
     @Ignore
-    public Flight(int flightId, String airline, String departureTime, String arrivalTime,
+    public Flight(int flightId, String airline, Date departureTime, Date arrivalTime,
                   String origin, String destination, String duration, double cost, int connectingFlight) {
         this.flightId = flightId;
         this.airline = airline;
@@ -85,7 +90,7 @@ public class Flight {
 
     //connecting flight, no flight id
     @Ignore
-    public Flight(String airline, String departureDate, String arrivalDate,
+    public Flight(String airline, Date departureDate, Date arrivalDate,
                   String origin, String destination, String duration, double cost, int connectingFlight) {
         this.airline = airline;
         this.departureDate = departureDate;
@@ -113,17 +118,17 @@ public class Flight {
         this.airline = airline;
     }
 
-    public String getDepartureDate() {return departureDate;}
+    public Date getDepartureDate() {return departureDate;}
 
-    public void setDepartureDate( String departureDate) {
+    public void setDepartureDate( Date departureDate) {
         this.departureDate = departureDate;
     }
 
-    public String getArrivalDate() {
+    public Date getArrivalDate() {
         return arrivalDate;
     }
 
-    public void setArrivalDate(String arrivalDate) {
+    public void setArrivalDate(Date arrivalDate) {
         this.arrivalDate = arrivalDate;
     }
 

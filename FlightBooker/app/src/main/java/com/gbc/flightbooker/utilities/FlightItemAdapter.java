@@ -48,8 +48,8 @@ public class FlightItemAdapter extends ArrayAdapter<Flight> {
         Flight flight = flightList.get(position);
 
         tvAirline.setText(flight.getAirline());
-        tvDeparture.setText(flight.getDepartureDate());
-        tvArrival.setText(flight.getArrivalDate());
+        tvDeparture.setText(Helper.dateToString(flight.getDepartureDate()));
+        tvArrival.setText(Helper.dateToString(flight.getArrivalDate()));
         tvOrigin.setText(flight.getOrigin());
         tvDestination.setText(flight.getDestination());
         tvDuration.setText(flight.getDuration());

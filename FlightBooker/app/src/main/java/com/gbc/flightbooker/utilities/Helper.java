@@ -2,6 +2,9 @@ package com.gbc.flightbooker.utilities;
 
 import android.util.Log;
 import android.widget.EditText;
+import java.util.Calendar;
+import android.widget.EditText;
+import com.gbc.flightbooker.db.Flight;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.util.Calendar;
