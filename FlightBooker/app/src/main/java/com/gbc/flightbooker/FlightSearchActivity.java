@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
@@ -76,13 +77,17 @@ public class FlightSearchActivity extends Activity {
                             Log.d("FlightSearchActivity", "Flights inserted.");
                         }
 
-                        startActivity(new Intent(v.getContext(), FlightSelectionActivity.class));
+                        int selectedID = sortByRadioGroup.getCheckedRadioButtonId();
+                        RadioButton selected = findViewById(selectedID);
+                        String sortType = selected.getText().toString().toLowerCase();
+                        Intent intent = new Intent(v.getContext(), FlightSelectionActivity.class);
+                        intent.putExtra("sorttype", sortType);
+                        startActivity(intent);
+
 
                     }catch (Exception e){
                         Toast.makeText(FlightSearchActivity.this, "Something went wrong", Toast.LENGTH_SHORT).show();
                         Log.d("FlightSearchActivity", "Exception :( \n" + e.getMessage());
-                        Log.d("FlightSearchActivity", "Exception :( \n" + e.getCause());
-                        Log.d("FlightSearchActivity", "Exception :( \n" + e.getClass());
                     }
 
                 }
