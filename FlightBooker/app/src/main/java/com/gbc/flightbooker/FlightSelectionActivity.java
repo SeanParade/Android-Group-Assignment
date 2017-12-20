@@ -18,8 +18,7 @@ public class FlightSelectionActivity extends Activity {
 
     AppDatabase db;
     List<Flight> flights;
-    boolean isSortedByCost;
-    boolean isSortedByDuration;
+    String sortType;
 
     ExpandableListAdapter listAdapter;
     ExpandableListView expListView;
@@ -34,22 +33,18 @@ public class FlightSelectionActivity extends Activity {
         db = AppDatabase.getDatabase(getApplicationContext());
 
         Bundle extras = getIntent().getExtras();
-        isSortedByCost = extras.getBoolean("cost");
-        isSortedByDuration = extras.getBoolean("duration");
+        sortType = extras.getString("sorttype");
 
-    if(isSortedByCost)
+
+    if(sortType.equals("cost"))
     {
         //get flights from database with date sorted by cost
         //flights =
     }
-    else if(isSortedByDuration)
+    else if(sortType.equals("duration"))
     {
         //get flights from database with date sorted by duration
         //flights =
-    }
-    else//unsorted
-    {
-        //get all flights with destination and date
     }
 
     //get Listview
