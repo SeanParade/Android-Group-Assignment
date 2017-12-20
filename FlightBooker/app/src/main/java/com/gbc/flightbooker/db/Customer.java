@@ -2,6 +2,7 @@ package com.gbc.flightbooker.db;
 
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
 
 /**
@@ -10,8 +11,8 @@ import android.arch.persistence.room.PrimaryKey;
 
 @Entity(tableName="customer")
 public class Customer {
-    @PrimaryKey(autoGenerate=true)
-    private int customerId = 0;
+    @PrimaryKey(autoGenerate=false)
+    private int customerId = 1; // customer id is always the same since there is only one customer
 
     @ColumnInfo(name="firstname")
     private String firstName;
@@ -23,25 +24,18 @@ public class Customer {
     private String address;
 
     @ColumnInfo(name="phone")
-    private int phone;
+    private String phone;
 
     @ColumnInfo(name="credit")
-    private int creditCardNumber;
+    private String creditCardNumber;
+
+    public Customer(){}
 
     //overloaded constructor
-    public Customer(int customerId, String firstName, String lastName, String address, int phone, int creditCardNumber)
+    @Ignore
+    public Customer(String firstName, String lastName, String address, String phone, String creditCardNumber)
     {
-        this.customerId = customerId;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.address = address;
-        this.phone = phone;
-        this.creditCardNumber = creditCardNumber;
-    }
-
-    //constructor without customerId
-    public Customer(String firstName, String lastName, String address, int phone, int creditCardNumber)
-    {
+        this.customerId = 1;
         this.firstName = firstName;
         this.lastName = lastName;
         this.address = address;
@@ -81,19 +75,19 @@ public class Customer {
         this.address = address;
     }
 
-    public int getPhone() {
+    public String getPhone() {
         return phone;
     }
 
-    public void setPhone(int phone) {
+    public void setPhone(String phone) {
         this.phone = phone;
     }
 
-    public int getCreditCardNumber() {
+    public String getCreditCardNumber() {
         return creditCardNumber;
     }
 
-    public void setCreditCardNumber(int creditCardNumber) {
+    public void setCreditCardNumber(String creditCardNumber) {
         this.creditCardNumber = creditCardNumber;
     }
 }

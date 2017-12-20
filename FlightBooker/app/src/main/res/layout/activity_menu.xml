@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,12 +7,57 @@
     tools:context="com.gbc.flightbooker.MenuActivity">
 
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="75dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:background="?android:attr/colorAccent"
+        android:gravity="center"
+        android:text="@string/title_welcome"
+        android:textColor="@android:color/background_light"
+        android:textSize="24sp" />
 
-</android.support.constraint.ConstraintLayout>
+    <Button
+        android:id="@+id/book_flight"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:layout_below="@+id/title"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="75dp"
+        android:background="?android:attr/colorAccent"
+        android:gravity="center"
+        android:text="@string/book_flight"
+        android:textAllCaps="false"
+        android:textColor="@android:color/background_light"
+        android:textSize="18sp" />
+
+    <Button
+        android:id="@+id/view_bookings"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:layout_alignStart="@+id/book_flight"
+        android:layout_below="@+id/book_flight"
+        android:layout_marginTop="57dp"
+        android:background="?android:attr/colorAccent"
+        android:gravity="center"
+        android:text="@string/view_bookings"
+        android:textAllCaps="false"
+        android:textColor="@android:color/background_light"
+        android:textSize="18sp" />
+
+    <Button
+        android:id="@+id/user_information"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:layout_alignStart="@+id/view_bookings"
+        android:layout_below="@+id/view_bookings"
+        android:layout_marginTop="58dp"
+        android:background="?android:attr/colorAccent"
+        android:gravity="center"
+        android:text="@string/user_information"
+        android:textAllCaps="false"
+        android:textColor="@android:color/background_light"
+        android:textSize="18sp" />
+
+</RelativeLayout>

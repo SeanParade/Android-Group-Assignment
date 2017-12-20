@@ -6,7 +6,7 @@ Airline Ticket Booking application submitted as our teams final assignment for t
 - Nooran
   - [ ] Flight Generation Class
   - [ ] Helper Utils
-    - Input validation, Datastring calculations, etc...
+    - Input validation, Timestring calculations, etc...
 - Dylan 
   - [ ] Layouts
   - [ ] Map inputs to objects
@@ -14,3 +14,10 @@ Airline Ticket Booking application submitted as our teams final assignment for t
   - [x] Fix classes
   - [x] Room Database implementation
   - [x] Queries
+  
+  
+## TODO by activity
+- User Info
+  - [ ] Input validation
+    - phone number, Credit card
+    
