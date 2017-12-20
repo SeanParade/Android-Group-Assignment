@@ -39,10 +39,12 @@ public class FlightSelectionActivity extends Activity {
 
     if(isSortedByCost)
     {
+        //get flights from database sorted by cost
         //flights =
     }
     else if(isSortedByDuration)
     {
+        //get flights from database sorted by duration
         //flights =
     }
 
