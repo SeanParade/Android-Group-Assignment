@@ -27,9 +27,11 @@ public class ViewFlightInfo extends Activity {
         flightId = extras.getInt("flightId");
         db = AppDatabase.getDatabase(getApplicationContext());
 
+        //Grab Flight by ID. Add it to the list.
         flightList = db.flightDao().fetchFlightByID(flightId);
         flight = flightList.get(0);
 
+        //If there's a connecting flight, add it to the list
         if (flight.getConnectingFlight() != 0){
             List<Flight> linkFlight = db.flightDao().fetchFlightByID(flight.getConnectingFlight());
             flightList.add(linkFlight.get(0));
@@ -37,6 +39,7 @@ public class ViewFlightInfo extends Activity {
 
         adapter = new FlightItemAdapter(this, flightList);
 
+        //Display list items
         ListView listView = findViewById(R.id.list_flights);
         listView.setAdapter(adapter);
 

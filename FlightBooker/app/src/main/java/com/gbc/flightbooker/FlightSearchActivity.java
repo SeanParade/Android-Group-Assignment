@@ -91,6 +91,7 @@ public class FlightSearchActivity extends Activity {
 
     }
 
+    //Returns the selected date from DatePicker View in a Date object
     public static Date getPickerDate (DatePicker datePicker ) {
         int day = datePicker.getDayOfMonth();
         int month = datePicker.getMonth();
