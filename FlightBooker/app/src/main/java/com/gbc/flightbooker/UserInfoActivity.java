@@ -11,8 +11,11 @@ import android.widget.Toast;
 
 import com.gbc.flightbooker.db.AppDatabase;
 import com.gbc.flightbooker.db.Customer;
+import static com.gbc.flightbooker.utilities.Helper.txtFromEditText;
 
 import java.util.Arrays;
+
+
 
 public class UserInfoActivity extends Activity {
     private static final String TAG = "User Info";
@@ -45,11 +48,11 @@ public class UserInfoActivity extends Activity {
             @Override
             public void onClick(View v) {
                 Log.d(TAG, "Submit Info clicked");
-                firstNameTxt = firstName.getText().toString().trim();
-                lastNameTxt = lastName.getText().toString().trim();
-                addressTxt = address.getText().toString().trim();
-                phoneNumberTxt = phoneNumber.getText().toString().trim();
-                creditCardTxt = creditCard.getText().toString().trim();
+                firstNameTxt = txtFromEditText(firstName);
+                lastNameTxt = txtFromEditText(lastName);
+                addressTxt = txtFromEditText(address);
+                phoneNumberTxt = txtFromEditText(phoneNumber);
+                creditCardTxt = txtFromEditText(creditCard);
 
                 //Text Validation Rule array
                 Boolean[] rules = new Boolean[]{
@@ -60,18 +63,17 @@ public class UserInfoActivity extends Activity {
                         TextUtils.isEmpty(creditCardTxt)
                 };
 
-                if(Arrays.asList(rules).contains(true)) {
+                if (Arrays.asList(rules).contains(true)) {
                     // if any fields are empty
                     Toast.makeText(UserInfoActivity.this,
                             "Please fill out all fields before submitting", Toast.LENGTH_SHORT).show();
 
-                } else{
-                    Customer c = new Customer(firstNameTxt,lastNameTxt,addressTxt,phoneNumberTxt,creditCardTxt);
+                } else {
+                    Customer c = new Customer(firstNameTxt, lastNameTxt, addressTxt, phoneNumberTxt, creditCardTxt);
                     db.customerDao().updateCustomer(c);
                 }
             }
         });
-
-
     }
 }
+

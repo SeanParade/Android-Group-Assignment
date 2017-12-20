@@ -1,5 +1,7 @@
 package com.gbc.flightbooker.utilities;
 
+import android.widget.EditText;
+
 import com.gbc.flightbooker.db.Flight;
 
 import java.text.DateFormat;
@@ -85,5 +87,11 @@ public class Helper {
             times[i] = Integer.parseInt(timeStrings[i]);
         }
         return times;
+    }
+
+    public static String txtFromEditText(EditText et)
+    //call getText, toString and trim on an Edit text
+    {
+        return et.getText().toString().trim();
     }
 }
