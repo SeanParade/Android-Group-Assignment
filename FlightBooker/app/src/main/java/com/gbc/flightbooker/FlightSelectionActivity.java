@@ -39,13 +39,17 @@ public class FlightSelectionActivity extends Activity {
 
     if(isSortedByCost)
     {
-        //get flights from database sorted by cost
+        //get flights from database with date sorted by cost
         //flights =
     }
     else if(isSortedByDuration)
     {
-        //get flights from database sorted by duration
+        //get flights from database with date sorted by duration
         //flights =
+    }
+    else//unsorted
+    {
+        //get all flights with destination and date
     }
 
     //get Listview
