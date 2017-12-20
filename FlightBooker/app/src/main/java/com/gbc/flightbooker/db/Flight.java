@@ -6,6 +6,9 @@ import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
 import android.arch.persistence.room.TypeConverters;
 
+import com.gbc.flightbooker.utilities.FlightGenerator;
+import com.gbc.flightbooker.utilities.Helper;
+
 import java.util.Date;
 
 /**
@@ -169,4 +172,34 @@ public class Flight {
     public void setConnectingFlight(int connectingFlight) {
         this.connectingFlight = connectingFlight;
     }
+
+    @Ignore
+    public String getFlightHeader()
+    {
+        String header = "From ";
+        header += this.getOrigin() + " to " + this.getDestination() + " Duration: " + this.getDuration() + " Cost: $" + this.getCost();
+        return header;
+    }
+
+    @Ignore
+    public String getConnectingFlightHeader(String airline)
+    {
+        String header = "From ";
+        String duration = "04:30:00";
+        double cost = FlightGenerator.calculateCost(duration, airline);
+        header += "Toronto to Miami" + " Duration: " +  duration + " Cost: $" + cost;
+        return header;
+    }
+
+    @Ignore
+    public String getFlightDetail()
+    {
+        String detail = "";
+        detail += "Airline: " + this.getAirline() + "Flight Number: " + this.getFlightId() + "\n" +
+                "Departure Date: " + Helper.dateToString(this.getDepartureDate()) + " at " + Helper.timeToString(this.getDepartureDate()) + "\n" +
+                "Arrival Date: " + Helper.dateToString(this.getArrivalDate()) + " at " + Helper.timeToString(this.getArrivalDate()) + "\n" +
+                "Duration: " + this.getDuration() + " minutes" + " Cost: " + this.getCost() + "\n";
+        return detail;
+    }
+
 }

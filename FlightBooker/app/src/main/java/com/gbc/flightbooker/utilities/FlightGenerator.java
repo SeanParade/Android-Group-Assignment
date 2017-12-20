@@ -104,7 +104,7 @@ public class FlightGenerator {
     }
 
     //calculate cost based on duration of flight and rate of airline
-    private static double calculateCost(String duration, String airline) {
+    public static double calculateCost(String duration, String airline) {
         double cost = 0;
         int rate = 0;
         int[] times = Helper.timeSplit(duration);
