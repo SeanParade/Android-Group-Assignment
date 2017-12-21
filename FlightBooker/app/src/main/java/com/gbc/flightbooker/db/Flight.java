@@ -187,10 +187,10 @@ public class Flight {
     public String getFlightDetail()
     {
         String detail = "";
-        detail += "Airline: " + this.getAirline() + "Flight Number: " + this.getFlightId() + "\n" +
+        detail += "Airline: " + this.getAirline() + "\nFlight Number: " + this.getFlightId() + "\n" +
                 "Departure Date: " + Helper.dateToString(this.getDepartureDate()) + " at " + Helper.timeToString(this.getDepartureDate()) + "\n" +
                 "Arrival Date: " + Helper.dateToString(this.getArrivalDate()) + " at " + Helper.timeToString(this.getArrivalDate()) + "\n" +
-                "Duration: " + this.getDuration() + " minutes" + " Cost: " + this.getCost() + "\n";
+                "Duration: " + this.getDuration() + " minutes" + "\n Cost: " + this.getCost() + "\n";
         return detail;
     }
 
