@@ -23,7 +23,7 @@ public interface FlightDao {
     void insert(Flight flight);
 
     @Query("DELETE FROM Flight")
-    void deleteAllFlights(Flight... flights);
+    void deleteAllFlights();
 
     @Query("SELECT * FROM flight")
     List<Flight> fetchAllFlights();
