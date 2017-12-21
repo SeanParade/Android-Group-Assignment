@@ -69,7 +69,7 @@ public class FlightGenerator {
         ArrayList<Date> departureTimes = departureTimes(departure);
         for (Date time : departureTimes)
         {
-            if(destination == DESTIN1)
+            if(destination == DESTIN1) //direct flight
             {
                 String duration = calculateDuration(origin, destination);
                 Date arrival = calculateArrival(departure, duration);
@@ -81,9 +81,9 @@ public class FlightGenerator {
                         destination, duration, cost);
                 flights.add(flight);
             }
-            else
+            else //connecting flight
             {
-                String duration = calculateDuration(origin, DESTIN1);
+                String duration = calculateDuration(origin, DESTIN1); //create direct flight first
                 Date arrival = calculateArrival(departure, duration);
                 String airline = airlines.get(departureTimes.indexOf(time));
                 double cost = calculateCost(duration, airline);
@@ -94,8 +94,8 @@ public class FlightGenerator {
 
                 flights.add(flight);
 
-                duration = calculateDuration(origin, DESTIN2);
-                Date connDeparture = Helper.addTime(arrival, "00:45");
+                duration = calculateDuration(origin, DESTIN2); //create connecting flight
+                Date connDeparture = Helper.addTime(arrival, "00:45"); //set departure time to after arrival of first flight
                 arrival = calculateArrival(connDeparture, duration);
                 airline = airlines.get(departureTimes.indexOf(time));
                 cost = calculateCost(duration, airline);
@@ -151,7 +151,7 @@ public class FlightGenerator {
         }
 
         //multiply hours by rate
-        cost = times[0] * rate;
+        cost = 100 + times[0] * rate;
         return cost;
     }
 
