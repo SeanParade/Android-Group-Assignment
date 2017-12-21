@@ -10,7 +10,7 @@ import com.gbc.flightbooker.db.dao.*;
  * Created on 12/14/2017.
  */
 
-@Database(entities = {Customer.class, Booking.class, Flight.class}, version = 2, exportSchema = false)
+@Database(entities = {Customer.class, Booking.class, Flight.class}, version = 3, exportSchema = false)
 public abstract class AppDatabase extends RoomDatabase{
      private static AppDatabase INSTANCE;
 

@@ -5,6 +5,7 @@ import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
 import android.arch.persistence.room.TypeConverters;
+import android.support.annotation.NonNull;
 
 import com.gbc.flightbooker.utilities.FlightGenerator;
 import com.gbc.flightbooker.utilities.Helper;
@@ -18,6 +19,7 @@ import java.util.Date;
 public class Flight {
 
     @PrimaryKey
+    @NonNull
     private String flightId;
 
     @ColumnInfo(name="airline")

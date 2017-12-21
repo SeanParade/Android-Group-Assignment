@@ -22,8 +22,8 @@ public interface FlightDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(Flight flight);
 
-    @Delete
-    void deleteFlights(Flight... flights);
+    @Query("DELETE FROM Flight")
+    void deleteAllFlights();
 
     @Query("SELECT * FROM flight")
     List<Flight> fetchAllFlights();

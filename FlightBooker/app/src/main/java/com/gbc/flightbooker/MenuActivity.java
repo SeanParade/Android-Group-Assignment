@@ -21,7 +21,8 @@ public class MenuActivity extends Activity {
         setContentView(R.layout.activity_menu);
         db = AppDatabase.getDatabase(getApplicationContext());
 
-
+        // Drop flights table to clear testing data
+        db.flightDao().deleteAllFlights();
         //Make a fake user if they don't exist
         if(db.customerDao().getCustomer() == null){
             Log.d("Entry Point", "Creating test user");
