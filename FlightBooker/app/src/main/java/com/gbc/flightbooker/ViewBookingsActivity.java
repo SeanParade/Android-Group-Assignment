@@ -30,9 +30,11 @@ public class ViewBookingsActivity extends Activity {
         bookingList = db.bookingDao().fetchAllBookings();
         adapter = new BookingItemAdapter(this, bookingList);
 
-        ListView listView = (ListView) findViewById(R.id.list_bookings);
+        ListView listView = findViewById(R.id.list_bookings);
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            //When booking from ListView is clicked. Add FlightID as extra to new intent
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 booking = bookingList.get(i);

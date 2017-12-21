@@ -17,8 +17,8 @@ import java.util.Date;
 @Entity(tableName="flight")
 public class Flight {
 
-    @PrimaryKey(autoGenerate=true)
-    private int flightId = 0;
+    @PrimaryKey
+    private String flightId;
 
     @ColumnInfo(name="airline")
     private String airline;
@@ -50,7 +50,7 @@ public class Flight {
 
     //overloaded constructor
     @Ignore
-    public Flight(int flightId, String airline, Date departureDate, Date arrivalDate,
+    public Flight(String flightId, String airline, Date departureDate, Date arrivalDate,
                   String origin, String destination, String duration, double cost) {
         this.flightId = flightId;
         this.airline = airline;
@@ -78,7 +78,7 @@ public class Flight {
 
     //overloaded with connecting flight
     @Ignore
-    public Flight(int flightId, String airline, Date departureTime, Date arrivalTime,
+    public Flight(String flightId, String airline, Date departureTime, Date arrivalTime,
                   String origin, String destination, String duration, double cost, int connectingFlight) {
         this.flightId = flightId;
         this.airline = airline;
@@ -105,11 +105,11 @@ public class Flight {
         this.connectingFlight = connectingFlight;
     }
 
-    public int getFlightId() {
+    public String getFlightId() {
         return flightId;
     }
 
-    public void setFlightId(int flightId) {
+    public void setFlightId(String flightId) {
         this.flightId = flightId;
     }
 
