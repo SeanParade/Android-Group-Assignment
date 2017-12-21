@@ -32,9 +32,9 @@ public class FlightGenerator {
     private static ArrayList<Date> departureTimes(Date departure) {
         ArrayList<Date> departureDates = new ArrayList<>();
         ArrayList<String> times = new ArrayList<>();
-        times.add("08:00");
-        times.add("10:30");
-        times.add("14:30");
+        times.add("08:00:00");
+        times.add("10:30:00");
+        times.add("14:30:00");
 
         for (String time : times) {
             departureDates.add(Helper.addTime(departure, time));
@@ -69,7 +69,7 @@ public class FlightGenerator {
         ArrayList<Date> departureTimes = departureTimes(departure);
         for (Date time : departureTimes)
         {
-            if(destination == DESTIN1)
+            if(destination == DESTIN1) //direct flight
             {
                 String duration = calculateDuration(origin, destination);
                 Date arrival = calculateArrival(departure, duration);
@@ -81,9 +81,9 @@ public class FlightGenerator {
                         destination, duration, cost);
                 flights.add(flight);
             }
-            else
+            else //connecting flight
             {
-                String duration = calculateDuration(origin, DESTIN1);
+                String duration = calculateDuration(origin, DESTIN1); //create direct flight first
                 Date arrival = calculateArrival(departure, duration);
                 String airline = airlines.get(departureTimes.indexOf(time));
                 double cost = calculateCost(duration, airline);
@@ -94,13 +94,14 @@ public class FlightGenerator {
 
                 flights.add(flight);
 
-                duration = calculateDuration(origin, DESTIN2);
-                arrival = calculateArrival(departure, duration);
+                duration = calculateDuration(origin, DESTIN2); //create connecting flight
+                Date connDeparture = Helper.addTime(arrival, "00:45"); //set departure time to after arrival of first flight
+                arrival = calculateArrival(connDeparture, duration);
                 airline = airlines.get(departureTimes.indexOf(time));
                 cost = calculateCost(duration, airline);
 
                 flight = new Flight(createRandomId(true),
-                        airline, departure, arrival, origin,
+                        airline, connDeparture, arrival, origin,
                         destination, duration, cost);
 
                 flights.add(flight);
@@ -150,7 +151,7 @@ public class FlightGenerator {
         }
 
         //multiply hours by rate
-        cost = times[0] * rate;
+        cost = 100 + times[0] * rate;
         return cost;
     }
 
