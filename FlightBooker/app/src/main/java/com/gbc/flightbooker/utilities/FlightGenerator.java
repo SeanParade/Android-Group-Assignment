@@ -32,9 +32,9 @@ public class FlightGenerator {
     private static ArrayList<Date> departureTimes(Date departure) {
         ArrayList<Date> departureDates = new ArrayList<>();
         ArrayList<String> times = new ArrayList<>();
-        times.add("08:00");
-        times.add("10:30");
-        times.add("14:30");
+        times.add("08:00:00");
+        times.add("10:30:00");
+        times.add("14:30:00");
 
         for (String time : times) {
             departureDates.add(Helper.addTime(departure, time));
@@ -95,12 +95,13 @@ public class FlightGenerator {
                 flights.add(flight);
 
                 duration = calculateDuration(origin, DESTIN2);
-                arrival = calculateArrival(departure, duration);
+                Date connDeparture = Helper.addTime(arrival, "00:45");
+                arrival = calculateArrival(connDeparture, duration);
                 airline = airlines.get(departureTimes.indexOf(time));
                 cost = calculateCost(duration, airline);
 
                 flight = new Flight(createRandomId(true),
-                        airline, departure, arrival, origin,
+                        airline, connDeparture, arrival, origin,
                         destination, duration, cost);
 
                 flights.add(flight);
