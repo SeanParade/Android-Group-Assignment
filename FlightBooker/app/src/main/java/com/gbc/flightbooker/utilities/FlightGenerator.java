@@ -94,7 +94,7 @@ public class FlightGenerator {
 
                 flights.add(flight);
 
-                duration = calculateDuration(origin, DESTIN2); //create connecting flight
+                duration = calculateDuration(DESTIN1, DESTIN2); //create connecting flight
                 Date connDeparture = Helper.addTime(arrival, "00:45"); //set departure time to after arrival of first flight
                 arrival = calculateArrival(connDeparture, duration);
                 airline = airlines.get(departureTimes.indexOf(time));
