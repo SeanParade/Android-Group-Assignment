@@ -3,6 +3,8 @@ package com.gbc.flightbooker;
 import android.app.Activity;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
 
@@ -31,21 +33,20 @@ public class FlightSelectionActivity extends Activity {
         setContentView(R.layout.activity_flight_selection);
 
         db = AppDatabase.getDatabase(getApplicationContext());
+        //Bundle extras = getIntent().getExtras();
+        //sortType = extras.getString("sorttype");
 
-        Bundle extras = getIntent().getExtras();
-        sortType = extras.getString("sorttype");
 
-
-    if(sortType.equals("cost"))
+    /*if(sortType.equals("cost"))
     {
         //get flights from database with date sorted by cost
         //flights =
     }
-    else if(sortType.equals("duration"))
-    {
+    else
+    {*/
         //get flights from database with date sorted by duration
-        //flights =
-    }
+        flights = db.flightDao().fetchAllFlights();
+    //}
 
     //get Listview
         expListView = (ExpandableListView)findViewById(R.id.expFlightList);
@@ -55,6 +56,23 @@ public class FlightSelectionActivity extends Activity {
 
         listAdapter = new ExpandableFlightListAdapter(this, flightHeader, flightChild);
         expListView.setAdapter(listAdapter);
+
+        expListView.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener(){
+            @Override
+            public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id)
+            {
+                if(expListView.isGroupExpanded(groupPosition))
+                {
+                    parent.collapseGroup(groupPosition);
+                    return true;
+                }
+                parent.expandGroup(groupPosition);
+                return true;
+            }
+        });
+
+
+
     }
 
     private void prepareListData(List<Flight> flights)
@@ -75,7 +93,6 @@ public class FlightSelectionActivity extends Activity {
                 flightHeaderString = connectingFlightHeader(flight, connectingFlight);
                 //add string to flightheader arraylist
                 flightHeader.add(flightHeaderString);
-
                 //add flight details for both flights to second list
                 flightDetails.add(flight.getFlightDetail());
                 flightDetails.add(connectingFlight.getFlightDetail());

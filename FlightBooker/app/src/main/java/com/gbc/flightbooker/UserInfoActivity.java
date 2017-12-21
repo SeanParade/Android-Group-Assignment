@@ -71,6 +71,8 @@ public class UserInfoActivity extends Activity {
                 } else {
                     Customer c = new Customer(firstNameTxt, lastNameTxt, addressTxt, phoneNumberTxt, creditCardTxt);
                     db.customerDao().updateCustomer(c);
+                    Toast.makeText(UserInfoActivity.this,
+                            "Customer updated", Toast.LENGTH_SHORT).show();
                 }
             }
         });

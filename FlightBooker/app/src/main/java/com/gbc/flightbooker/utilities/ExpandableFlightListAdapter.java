@@ -1,6 +1,7 @@
 package com.gbc.flightbooker.utilities;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 import com.gbc.flightbooker.R;
 import com.gbc.flightbooker.db.Flight;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -34,7 +36,7 @@ public class ExpandableFlightListAdapter extends BaseExpandableListAdapter {
     @Override
     public Object getChild(int listPosition, int expandedListPosition)
     {
-        return this.flightChild.get(this.flightHeader.get(expandedListPosition));
+        return this.flightChild.get(this.flightHeader.get(listPosition)).get(expandedListPosition);
 
     }
     @Override
@@ -43,17 +45,19 @@ public class ExpandableFlightListAdapter extends BaseExpandableListAdapter {
         return expandedListPosition;
     }
     @Override
-    public View getChildView(int listPosition, final int expandedListPosition,
+    public View getChildView(int listPosition, int expandedListPosition,
                              boolean isLastChild, View convertView, ViewGroup parent)
     {
-        final String expandedChildText = (String) getChild(listPosition, expandedListPosition);
+        String text="";
+        String flightDetails =  (String)getChild(listPosition, expandedListPosition);
+
         if(convertView== null)
         {
             LayoutInflater layoutInflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = layoutInflater.inflate(R.layout.list_item, null);
         }
         TextView expandedTextView = (TextView) convertView.findViewById(R.id.expandedListItem);
-        expandedTextView.setText(expandedChildText);
+        expandedTextView.setText(flightDetails);
         return convertView;
     }
     @Override
