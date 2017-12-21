@@ -2,20 +2,24 @@ package com.gbc.flightbooker.utilities;
 
 import android.util.Log;
 import android.widget.EditText;
+
+import java.util.Base64;
 import java.util.Calendar;
-import android.widget.EditText;
-import com.gbc.flightbooker.db.Flight;
 import java.text.DateFormat;
 import java.text.ParseException;
-import java.util.Calendar;
 import java.util.Date;
 import java.text.SimpleDateFormat;
+import java.util.Random;
 
 /**
  * Created by nooran on 2017-12-16.
  */
 
+
+
 public class Helper {
+
+
 
     //convert from cal to string
     public static String calToString(Calendar cal)

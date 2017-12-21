@@ -30,7 +30,7 @@ public class ViewBookingsActivity extends Activity {
         bookingList = db.bookingDao().fetchAllBookings();
         adapter = new BookingItemAdapter(this, bookingList);
 
-        ListView listView = (ListView) findViewById(R.id.list_bookings);
+        ListView listView = findViewById(R.id.list_bookings);
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

@@ -3,12 +3,11 @@ package com.gbc.flightbooker.utilities;
 import android.util.Log;
 
 import com.gbc.flightbooker.db.Flight;
-import com.gbc.flightbooker.utilities.Helper;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
 
 /**
  * Created by nooran on 2017-12-16.
@@ -51,11 +50,9 @@ public class FlightGenerator {
         if(origin.equalsIgnoreCase(ORIGIN.substring( 0, origin.length())))
             origin = ORIGIN;
         else{
-            Log.d("Flight Generator", "Origin entry: " + origin +
-                    "\nOrigin:" +ORIGIN.substring( 0, origin.length()));
+            Log.d("Flight Generator", "Origin entry: " + origin);
             throw new Exception("Flights from that origin aren't currently supported");
         }
-
 
         // checks if origin is Chicago, then swaps it for a formatted constant
         if(destination.equalsIgnoreCase(DESTIN1.substring( 0, destination.length())))
@@ -64,26 +61,51 @@ public class FlightGenerator {
         else if(destination.equalsIgnoreCase(DESTIN2.substring( 0, destination.length())))
             destination = DESTIN2;
         else{
-            Log.d("Flight Generator", "Destination entry: " + origin +
-                    "\nDestination 1:" + DESTIN1.substring( 0, origin.length()) +
-                    "\nDestination 2:" + DESTIN2.substring( 0, origin.length()));
+            Log.d("Flight Generator", "Destination entry: " + origin );
             throw new Exception("Flights to that Destination aren't currently supported");
         }
 
 
         ArrayList<Date> departureTimes = departureTimes(departure);
-        for (Date time : departureTimes) {
+        for (Date time : departureTimes)
+        {
+            if(destination == DESTIN1)
+            {
+                String duration = calculateDuration(origin, destination);
+                Date arrival = calculateArrival(departure, duration);
+                String airline = airlines.get(departureTimes.indexOf(time));
+                double cost = calculateCost(duration, airline);
 
-            String duration = calculateDuration(origin, destination);
-            Date arrival = calculateArrival(departure, duration);
-            String airline = airlines.get(departureTimes.indexOf(time));
-            //Date arrivalDate = Helper.stringToDate(arrival);
-            //Date departureDate = Helper.stringToDate(time);
-            double cost = calculateCost(duration, airline);
+                Flight flight = new Flight(createRandomId(false),
+                        airline, departure, arrival, origin,
+                        destination, duration, cost);
+                flights.add(flight);
+            }
+            else
+            {
+                String duration = calculateDuration(origin, DESTIN1);
+                Date arrival = calculateArrival(departure, duration);
+                String airline = airlines.get(departureTimes.indexOf(time));
+                double cost = calculateCost(duration, airline);
 
-            Flight flight = new Flight(airline, departure, arrival, origin,
-                    destination, duration, cost);
-            flights.add(flight);
+                Flight flight = new Flight(createRandomId(false),
+                        airline, departure, arrival, origin,
+                        destination, duration, cost);
+
+                flights.add(flight);
+
+                duration = calculateDuration(origin, DESTIN2);
+                arrival = calculateArrival(departure, duration);
+                airline = airlines.get(departureTimes.indexOf(time));
+                cost = calculateCost(duration, airline);
+
+                flight = new Flight(createRandomId(true),
+                        airline, departure, arrival, origin,
+                        destination, duration, cost);
+
+                flights.add(flight);
+            }
+
         }
         return flights;
     }
@@ -130,5 +152,25 @@ public class FlightGenerator {
         //multiply hours by rate
         cost = times[0] * rate;
         return cost;
+    }
+
+    private static String previousId; //used as sentinal value id generator
+    public static String createRandomId(Boolean connectingFlight)
+    {
+        String id = previousId;
+        if(!connectingFlight)
+        {
+            byte[] r = new byte[8];
+            Random rand = new Random();
+            rand.nextBytes(r);
+            id = android.util.Base64.encodeToString(r, android.util.Base64.DEFAULT);
+            previousId = id;
+        }
+        if(connectingFlight)
+        {
+            return id + "c";
+        }
+
+        return id;
     }
 }

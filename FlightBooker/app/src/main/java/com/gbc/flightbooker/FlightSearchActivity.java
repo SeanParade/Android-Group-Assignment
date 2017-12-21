@@ -67,30 +67,34 @@ public class FlightSearchActivity extends Activity {
                 if(!feedback.equals("")){
                     Toast.makeText(FlightSearchActivity.this,
                             feedback, Toast.LENGTH_SHORT).show();
-                }else {
-                    try{
-                        List<Flight> flights = FlightGenerator.generateFlights(originTxt, destinationTxt, departureDate);
-                        List<Flight> existingFlights = db.flightDao().fetchFlightByCityDate(originTxt, departureDate.toString());
-
-                        if(existingFlights.isEmpty()){
-                            db.flightDao().insertAll(flights);
-                            Log.d("FlightSearchActivity", "Flights inserted.");
-                        }
-
-                        int selectedID = sortByRadioGroup.getCheckedRadioButtonId();
-                        RadioButton selected = findViewById(selectedID);
-                        String sortType = selected.getText().toString().toLowerCase();
-                        Intent intent = new Intent(v.getContext(), FlightSelectionActivity.class);
-                        intent.putExtra("sorttype", sortType);
-                        startActivity(intent);
-
-
-                    }catch (Exception e){
-                        Toast.makeText(FlightSearchActivity.this, "Something went wrong", Toast.LENGTH_SHORT).show();
-                        Log.d("FlightSearchActivity", "Exception :( \n" + e.getMessage());
-                    }
-
                 }
+                else
+                    {
+                        try
+                        {
+                            List<Flight> flights = FlightGenerator.generateFlights(originTxt, destinationTxt, departureDate);
+                            List<Flight> existingFlights = db.flightDao().fetchFlightByCityDate(originTxt, departureDate.toString());
+
+                            if(existingFlights.isEmpty())
+                            {
+                                db.flightDao().insertAll(flights);
+                                Log.d("FlightSearchActivity", "Flights inserted.");
+                            }
+
+                            int selectedID = sortByRadioGroup.getCheckedRadioButtonId();
+                            RadioButton selected = findViewById(selectedID);
+                            String sortType = selected.getText().toString().toLowerCase();
+                            Intent intent = new Intent(v.getContext(), FlightSelectionActivity.class);
+                            intent.putExtra("sorttype", sortType);
+                            startActivity(intent);
+
+                        }
+                        catch (Exception e)
+                        {
+                            Toast.makeText(FlightSearchActivity.this, "Something went wrong", Toast.LENGTH_SHORT).show();
+                            Log.d("FlightSearchActivity", "Exception :( \n" + e.getMessage());
+                        }
+                    }
             }
         });
 
