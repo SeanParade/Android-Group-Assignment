@@ -2,7 +2,6 @@ package com.gbc.flightbooker;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
@@ -24,7 +23,7 @@ public class FlightSelectionActivity extends Activity {
     ExpandableListAdapter listAdapter;
     ExpandableListView expListView;
     List<String> flightHeader;
-    HashMap<String, List<String>> flightChild;
+    HashMap<String, List<Flight>> flightChild;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,23 +31,26 @@ public class FlightSelectionActivity extends Activity {
         setContentView(R.layout.activity_flight_selection);
 
         db = AppDatabase.getDatabase(getApplicationContext());
-        //Bundle extras = getIntent().getExtras();
-        //sortType = extras.getString("sorttype");
+        Bundle extras = getIntent().getExtras();
+        try {
+            sortType = extras.getString("sorttype");
+        }catch (Exception e){
+            sortType = "";
+        }
 
-
-    /*if(sortType.equals("cost"))
+    if(sortType.equals("cost"))
     {
         //get flights from database with date sorted by cost
-        //flights =
+        flights = db.flightDao().fetchAllFlightsByCost();
     }
     else
-    {*/
+    {
         //get flights from database with date sorted by duration
         flights = db.flightDao().fetchAllFlights();
-    //}
+    }
 
     //get Listview
-        expListView = (ExpandableListView)findViewById(R.id.expFlightList);
+        expListView = findViewById(R.id.expFlightList);
     //put flights into function that populates the expandable list view
 
         prepareListData(flights);
@@ -77,35 +79,38 @@ public class FlightSelectionActivity extends Activity {
     private void prepareListData(List<Flight> flights)
     {
         flightHeader = new ArrayList<String>();
-        flightChild = new HashMap<String, List<String>>();
+        flightChild = new HashMap<String, List<Flight>>();
 
         for( Flight flight: flights)
         {
-            List<String> flightDetails = new ArrayList<String>();
+            List<Flight> flightDetails = new ArrayList<>();
             String flightHeaderString = "";
-            if(flight.getConnectingFlight()!=0) //if flight has a connecting flight
+            if(!flight.getConnectingFlight().isEmpty()) //if flight has a connecting flight
             {
                 //get connecting flight from database
-                Flight connectingFlight = db.flightDao().fetchFlightByID(flight.getConnectingFlight()).get(0);
+                Flight connectingFlight = db.flightDao().fetchFlightByID(flight.getConnectingFlight());
 
                 //gen header string
                 flightHeaderString = connectingFlightHeader(flight, connectingFlight);
                 //add string to flightheader arraylist
                 flightHeader.add(flightHeaderString);
-                //add flight details for both flights to second list
-                flightDetails.add(flight.getFlightDetail());
-                flightDetails.add(connectingFlight.getFlightDetail());
+                //add both flights to second list
+                flightDetails.add(flight);
+                flightDetails.add(connectingFlight);
 
             }
             else
             {
-                //gen string flight header
-                flightHeaderString = flight.getFlightHeader();
-                //add to flightheader arraylist
-                flightHeader.add(flightHeaderString);
-                //add flight details to second list
-                flightDetails.add(flight.getFlightDetail());
-
+                String id = flight.getFlightId();
+                //check if id is for connecting flight
+                if(!id.substring(id.length()-2).equals("-c")) {
+                    //gen string flight header
+                    flightHeaderString = flight.getFlightHeader();
+                    //add to flightheader arraylist
+                    flightHeader.add(flightHeaderString);
+                    //add flight to second list
+                    flightDetails.add(flight);
+                }
             }
             //add second list to hashmap
             flightChild.put(flightHeaderString, flightDetails);
@@ -117,7 +122,7 @@ public class FlightSelectionActivity extends Activity {
         Double cost = flight1.getCost() + flight2.getCost();
         String duration = "04:30:00";
         String header = "From ";
-        header += flight1.getOrigin() + " To " + flight2.getDestination() + " Duration: " + duration + " Cost: " + cost;
+        header += flight1.getOrigin() + " To " + flight2.getDestination() + " Duration: " + duration + " Cost: $" + cost;
         return header;
     }
 

@@ -7,11 +7,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
-import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
+import org.hashids.*;
 
-/**
- * Created by nooran on 2017-12-16.
- */
 
 public class FlightGenerator {
 
@@ -69,7 +67,7 @@ public class FlightGenerator {
         ArrayList<Date> departureTimes = departureTimes(departure);
         for (Date time : departureTimes)
         {
-            if(destination == DESTIN1) //direct flight
+            if(destination.equals(DESTIN1)) //direct flight
             {
                 String duration = calculateDuration(origin, destination);
                 Date arrival = calculateArrival(departure, duration);
@@ -91,6 +89,7 @@ public class FlightGenerator {
                 Flight flight = new Flight(createRandomId(false),
                         airline, departure, arrival, origin,
                         destination, duration, cost);
+                flight.setConnectingFlight(flight.getFlightId() + "-c");
 
                 flights.add(flight);
 
@@ -137,9 +136,9 @@ public class FlightGenerator {
     }
 
     //calculate cost based on duration of flight and rate of airline
-    public static double calculateCost(String duration, String airline) {
-        double cost = 0;
-        int rate = 0;
+    private static double calculateCost(String duration, String airline) {
+        double cost;
+        int rate;
         int[] times = Helper.timeSplit(duration);
 
         if (airline.equals(AIRLINE1)) {
@@ -155,21 +154,25 @@ public class FlightGenerator {
         return cost;
     }
 
-    private static String previousId; //used as sentinal value id generator
-    public static String createRandomId(Boolean connectingFlight)
+    //used as sentinel value for id generator to copy id for connecting flight
+    private static String previousId;
+    // Flight id generator
+    private static String createRandomId(Boolean connectingFlight)
     {
         String id = previousId;
         if(!connectingFlight)
         {
-            byte[] r = new byte[8];
-            Random rand = new Random();
-            rand.nextBytes(r);
-            id = android.util.Base64.encodeToString(r, android.util.Base64.DEFAULT);
+            // generate random human-readable hash id
+            Long seed = ThreadLocalRandom.current().nextLong(900000000000L);
+            Long salt = System.currentTimeMillis() / 1000;
+            Hashids hasher = new Hashids(salt.toString());
+            id = hasher.encode(seed);
             previousId = id;
         }
         if(connectingFlight)
         {
-            return id + "c";
+            //appends -c to the id of the first flight. Used in booking logic.
+            return id + "-c";
         }
 
         return id;

@@ -41,6 +41,9 @@
         android:layout_marginStart="15dp"
         android:ems="10"
         android:inputType="text"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:text="Toronto"
         android:textSize="14sp" />
 
     <TextView
@@ -61,6 +64,9 @@
         android:layout_below="@+id/textView6"
         android:ems="10"
         android:inputType="textPersonName"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:text="Miami"
         android:textSize="14sp" />
 
     <TextView
@@ -116,6 +122,7 @@
             android:layout_width="95dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:checked="true"
             android:text="Duration"
             android:textSize="12sp" />
     </RadioGroup>

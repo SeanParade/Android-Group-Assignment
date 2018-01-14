@@ -6,8 +6,6 @@ import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
 import android.arch.persistence.room.TypeConverters;
 import android.support.annotation.NonNull;
-
-import com.gbc.flightbooker.utilities.FlightGenerator;
 import com.gbc.flightbooker.utilities.Helper;
 
 import java.util.Date;
@@ -46,7 +44,7 @@ public class Flight {
     private double cost;
 
     @ColumnInfo(name="connectingFlight")
-    private int connectingFlight=0;
+    private String connectingFlight = "";
 
     public Flight(){}
 
@@ -81,7 +79,7 @@ public class Flight {
     //overloaded with connecting flight
     @Ignore
     public Flight(String flightId, String airline, Date departureTime, Date arrivalTime,
-                  String origin, String destination, String duration, double cost, int connectingFlight) {
+                  String origin, String destination, String duration, double cost, String connectingFlight) {
         this.flightId = flightId;
         this.airline = airline;
         this.departureDate = departureTime;
@@ -96,7 +94,7 @@ public class Flight {
     //connecting flight, no flight id
     @Ignore
     public Flight(String airline, Date departureDate, Date arrivalDate,
-                  String origin, String destination, String duration, double cost, int connectingFlight) {
+                  String origin, String destination, String duration, double cost, String connectingFlight) {
         this.airline = airline;
         this.departureDate = departureDate;
         this.arrivalDate = arrivalDate;
@@ -167,11 +165,11 @@ public class Flight {
         this.cost = cost;
     }
 
-    public int getConnectingFlight() {
+    public String getConnectingFlight() {
         return connectingFlight;
     }
 
-    public void setConnectingFlight(int connectingFlight) {
+    public void setConnectingFlight(String connectingFlight) {
         this.connectingFlight = connectingFlight;
     }
 
@@ -188,6 +186,7 @@ public class Flight {
     {
         String detail = "";
         detail += "Airline: " + this.getAirline() + "\nFlight Number: " + this.getFlightId() + "\n" +
+                "Origin: " + this.getOrigin() + " \t => \t Destination: " + this.getDestination() + "\n" +
                 "Departure Date: " + Helper.dateToString(this.getDepartureDate()) + " at " + Helper.timeToString(this.getDepartureDate()) + "\n" +
                 "Arrival Date: " + Helper.dateToString(this.getArrivalDate()) + " at " + Helper.timeToString(this.getArrivalDate()) + "\n" +
                 "Duration: " + this.getDuration() + " minutes" + "\n Cost: " + this.getCost() + "\n";

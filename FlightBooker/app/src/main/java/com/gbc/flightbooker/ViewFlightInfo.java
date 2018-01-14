@@ -8,6 +8,7 @@ import com.gbc.flightbooker.db.AppDatabase;
 import com.gbc.flightbooker.db.Flight;
 import com.gbc.flightbooker.utilities.FlightItemAdapter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ViewFlightInfo extends Activity {
@@ -16,7 +17,7 @@ public class ViewFlightInfo extends Activity {
     List<Flight> flightList;
     FlightItemAdapter adapter;
     Flight flight;
-    int flightId;
+    String flightId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,18 +25,19 @@ public class ViewFlightInfo extends Activity {
         setContentView(R.layout.activity_view_flight_info);
 
         Bundle extras = getIntent().getExtras();
-        flightId = extras.getInt("flightId");
+        flightId = extras.getString("flightId");
         db = AppDatabase.getDatabase(getApplicationContext());
 
         //Grab Flight by ID. Add it to the list.
-        flightList = db.flightDao().fetchFlightByID(flightId);
-        flight = flightList.get(0);
+        flightList = new ArrayList<>();
+        flight = db.flightDao().fetchFlightByID(flightId);
+        flightList.add(flight);
+
 
         //If there's a connecting flight, add it to the list
-        if (flight.getConnectingFlight() != 0){
-            List<Flight> linkFlight = db.flightDao().fetchFlightByID(flight.getConnectingFlight());
-            flightList.add(linkFlight.get(0));
-        }
+        if (!flight.getConnectingFlight().isEmpty())
+            flightList.add(db.flightDao().fetchFlightByID(flight.getConnectingFlight()));
+
 
         adapter = new FlightItemAdapter(this, flightList);
 

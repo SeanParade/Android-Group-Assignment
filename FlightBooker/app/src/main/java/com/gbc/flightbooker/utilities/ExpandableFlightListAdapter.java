@@ -23,10 +23,10 @@ public class ExpandableFlightListAdapter extends BaseExpandableListAdapter {
 
     private Context context;
     private List<String> flightHeader;
-    private HashMap<String, List<String>> flightChild;
+    private HashMap<String, List<Flight>> flightChild;
 
     public ExpandableFlightListAdapter(Context context, List<String> flightHeader,
-                                       HashMap<String, List<String>> flightChild)
+                                       HashMap<String, List<Flight>> flightChild)
     {
         this.context = context;
         this.flightHeader = flightHeader;
@@ -48,16 +48,15 @@ public class ExpandableFlightListAdapter extends BaseExpandableListAdapter {
     public View getChildView(int listPosition, int expandedListPosition,
                              boolean isLastChild, View convertView, ViewGroup parent)
     {
-        String text="";
-        String flightDetails =  (String)getChild(listPosition, expandedListPosition);
+        Flight flightDetails =  (Flight)getChild(listPosition, expandedListPosition);
 
         if(convertView== null)
         {
             LayoutInflater layoutInflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = layoutInflater.inflate(R.layout.list_item, null);
         }
-        TextView expandedTextView = (TextView) convertView.findViewById(R.id.expandedListItem);
-        expandedTextView.setText(flightDetails);
+        TextView expandedTextView = convertView.findViewById(R.id.expandedListItem);
+        expandedTextView.setText(flightDetails.getFlightDetail());
         return convertView;
     }
     @Override
@@ -88,7 +87,7 @@ public class ExpandableFlightListAdapter extends BaseExpandableListAdapter {
                             View convertView, ViewGroup parent)
     {
         String headerTitle = (String)getGroup(listPosition);
-        if(convertView== null)
+        if(convertView == null)
         {
             LayoutInflater layoutInflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = layoutInflater.inflate(R.layout.list_group, null);

@@ -25,13 +25,16 @@ public interface FlightDao {
     @Query("SELECT * FROM flight")
     List<Flight> fetchAllFlights();
 
+    @Query("SELECT * FROM flight ORDER BY cost")
+    List<Flight> fetchAllFlightsByCost();
+
     @Query("SELECT * FROM flight WHERE flightId = :id")
-    List<Flight> fetchFlightByID(int id);
+    Flight fetchFlightByID(String id);
 
     @Query("SELECT * from flight WHERE destination LIKE :destination COLLATE NOCASE AND departureDate BETWEEN date(:start) AND date(:start, '+1 day')")
     List<Flight> fetchFlightByCityDate(String destination, String start);
 
     @Query("Delete FROM flight WHERE flightId = :id")
-    void deleteFlightByID(int id);
+    void deleteFlightByID(String id);
 
 }
