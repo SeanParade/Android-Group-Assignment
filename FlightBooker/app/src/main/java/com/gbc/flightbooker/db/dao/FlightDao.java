@@ -5,6 +5,8 @@ import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.OnConflictStrategy;
 import android.arch.persistence.room.Query;
 import com.gbc.flightbooker.db.Flight;
+
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -31,8 +33,8 @@ public interface FlightDao {
     @Query("SELECT * FROM flight WHERE flightId = :id")
     Flight fetchFlightByID(String id);
 
-    @Query("SELECT * FROM flight WHERE destination LIKE '%'||:destination||'%' AND departureDate BETWEEN datetime(:start) AND datetime(:start, '+1 day')")
-    List<Flight> fetchFlightByCityDate(String destination, Long start);
+    @Query("SELECT * FROM flight WHERE finalDestination LIKE '%'||:destination||'%' AND departureDate BETWEEN :start AND :end ORDER BY :sortType")
+    List<Flight> fetchFlightByCityDate(String destination, Date start, Date end, String sortType);
 
     @Query("Delete FROM flight WHERE flightId = :id")
     void deleteFlightByID(String id);

@@ -3,6 +3,7 @@ package com.gbc.flightbooker.utilities;
 import android.util.Log;
 import android.widget.EditText;
 
+import com.gbc.flightbooker.db.AppDatabase;
 import com.gbc.flightbooker.db.Flight;
 
 import java.util.Base64;
@@ -24,8 +25,6 @@ import java.util.TreeMap;
 
 
 public class Helper {
-
-
 
     //convert from cal to string
     public static String calToString(Calendar cal)
@@ -103,6 +102,19 @@ public class Helper {
     {
         return et.getText().toString().trim();
     }
+    public static List<Flight> flightsToDestinationByDay(String dest, Date day, AppDatabase db, String sortType)
+    //Fetch flights to a destination given a certain date while ignoring time
+    {
+        Calendar departureDate = Calendar.getInstance();
+        Calendar departureDateEnd = Calendar.getInstance();
+        departureDate.setTime(day);
+        departureDateEnd.setTime(day);
+        departureDate.set(Calendar.HOUR_OF_DAY, 0);
+        departureDateEnd.set(Calendar.HOUR_OF_DAY, 0);
+        departureDateEnd.add(Calendar.DAY_OF_MONTH, 1);
 
+        return db.flightDao().fetchFlightByCityDate(dest, departureDate.getTime(), departureDateEnd.getTime(), sortType);
 
+    }
 }
+

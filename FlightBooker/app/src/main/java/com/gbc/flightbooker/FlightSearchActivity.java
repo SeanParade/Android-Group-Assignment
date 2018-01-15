@@ -29,8 +29,7 @@ public class FlightSearchActivity extends Activity {
     EditText origin, destination;
     String originTxt, destinationTxt, feedback;
     DatePicker datePicker;
-    Date today;
-    Timestamp departureDate;
+    Date today, departureDate;
     Button searchBtn;
     RadioGroup sortByRadioGroup;
 
@@ -58,7 +57,7 @@ public class FlightSearchActivity extends Activity {
                 originTxt =  Helper.txtFromEditText(origin);
                 destinationTxt =  Helper.txtFromEditText(destination);
                 // create time stamp from date picker
-                departureDate= new Timestamp(getPickerDate(datePicker).getTime());
+                departureDate = getPickerDate(datePicker);
 
                 feedback = "";
 
@@ -78,7 +77,7 @@ public class FlightSearchActivity extends Activity {
                         try
                         {
                             List<Flight> existingFlights =
-                                    db.flightDao().fetchFlightByCityDate(destinationTxt, departureDate);
+                                    Helper.flightsToDestinationByDay(destinationTxt,departureDate,db,"cost");
                             List<Flight> flights = FlightGenerator.generateFlights(originTxt, destinationTxt, departureDate);
                             List<Flight> tester = db.flightDao().fetchAllFlights();
                             if(existingFlights.isEmpty())
@@ -92,6 +91,8 @@ public class FlightSearchActivity extends Activity {
                             String sortType = selected.getText().toString().toLowerCase();
                             Intent intent = new Intent(v.getContext(), FlightSelectionActivity.class);
                             intent.putExtra("sorttype", sortType);
+                            intent.putExtra("dest", destinationTxt);
+                            intent.putExtra("depDate", departureDate.getTime());
                             startActivity(intent);
 
                         }
