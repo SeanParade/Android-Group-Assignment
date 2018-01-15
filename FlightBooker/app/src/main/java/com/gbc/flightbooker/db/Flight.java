@@ -49,6 +49,9 @@ public class Flight {
     @ColumnInfo(name="connectingFlight")
     private String connectingFlight = "";
 
+    @ColumnInfo(name="finalDestination")
+    private String finalDestination = "";
+
     public Flight(){}
 
     //overloaded constructor
@@ -182,6 +185,14 @@ public class Flight {
 
     public void setConnectingFlight(String connectingFlight) {
         this.connectingFlight = connectingFlight;
+    }
+
+    public String getFinalDestination() {
+        return finalDestination;
+    }
+
+    public void setFinalDestination(String finalDestination) {
+        this.finalDestination = finalDestination;
     }
 
     @Ignore

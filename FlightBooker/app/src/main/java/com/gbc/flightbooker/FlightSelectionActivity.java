@@ -11,18 +11,20 @@ import android.widget.Toast;
 import com.gbc.flightbooker.db.AppDatabase;
 import com.gbc.flightbooker.db.Flight;
 import com.gbc.flightbooker.utilities.ExpandableFlightListAdapter;
+import com.gbc.flightbooker.utilities.Helper;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.sql.Timestamp;
 
 public class FlightSelectionActivity extends Activity {
 
     AppDatabase db;
     List<Flight> flights;
-    String sortType;
+    String sortType, dest;
+    Date depDate;
 
     ExpandableListAdapter listAdapter;
     ExpandableListView expListView;
@@ -38,20 +40,16 @@ public class FlightSelectionActivity extends Activity {
         Bundle extras = getIntent().getExtras();
         try {
             sortType = extras.getString("sorttype");
+            dest = extras.getString("dest");
+            depDate = new Date(extras.getLong("depDate"));
+            flights = Helper.flightsToDestinationByDay(dest,depDate,db,sortType);
+
         }catch (Exception e){
-            sortType = "";
+            e.printStackTrace();
+            Toast.makeText(this, "Something went wrong. \nPlease try again.", Toast.LENGTH_SHORT).show();
         }
 
-    if(sortType.equals("cost"))
-    {
-        //get flights from database with date sorted by cost
-        flights = db.flightDao().fetchAllFlightsByTotalCost();
-    }
-    else
-    {
-        //get flights from database with date sorted by duration
-        flights = db.flightDao().fetchAllFlights();
-    }
+
 
     //get Listview
         expListView = findViewById(R.id.expFlightList);
@@ -80,22 +78,6 @@ public class FlightSelectionActivity extends Activity {
 
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        flights = null;
-        if(sortType.equals("cost"))
-        {
-            //get flights from database with date sorted by cost
-            flights = db.flightDao().fetchAllFlightsByTotalCost();
-        }
-        else
-        {
-            //get flights from database with date sorted by duration
-            flights = db.flightDao().fetchAllFlights();
-        }
-        prepareListData(flights);
-    }
 
     private void prepareListData(List<Flight> flights)
     {

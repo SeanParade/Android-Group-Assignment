@@ -3,6 +3,7 @@ package com.gbc.flightbooker.db;
 import android.arch.persistence.room.Database;
 import android.arch.persistence.room.Room;
 import android.arch.persistence.room.RoomDatabase;
+import android.arch.persistence.room.TypeConverters;
 import android.content.Context;
 import android.util.Log;
 
@@ -11,7 +12,8 @@ import com.gbc.flightbooker.db.dao.*;
  * Created on 12/14/2017.
  */
 
-@Database(entities = {Customer.class, Booking.class, Flight.class}, version = 7, exportSchema = false)
+@Database(entities = {Customer.class, Booking.class, Flight.class}, version = 9, exportSchema = false)
+@TypeConverters({DateConverter.class})
 public abstract class AppDatabase extends RoomDatabase{
      private static AppDatabase INSTANCE;
 
