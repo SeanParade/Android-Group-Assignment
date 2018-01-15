@@ -11,6 +11,8 @@ import android.widget.TextView;
 import com.gbc.flightbooker.R;
 import com.gbc.flightbooker.db.Booking;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 public class BookingItemAdapter extends ArrayAdapter<Booking> {
@@ -40,10 +42,11 @@ public class BookingItemAdapter extends ArrayAdapter<Booking> {
 
         Booking booking = bookingsList.get(position);
 
+        DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
 
         tvHeader.setText(booking.getFlightHeader());
-        tvDepartureDate.setText(booking.getDepartureDate());
-        tvArrivalDate.setText(booking.getArrivalDate());
+        tvDepartureDate.setText(df.format(booking.getDepartureDate()));
+        tvArrivalDate.setText(df.format(booking.getArrivalDate()));
         tvTotalCost.setText(Double.toString(booking.getTotalCost()));
 
 

@@ -5,6 +5,9 @@ import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.ForeignKey;
 import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
+import android.arch.persistence.room.TypeConverters;
+
+import java.util.Date;
 
 import static android.arch.persistence.room.ForeignKey.CASCADE;
 
@@ -20,29 +23,34 @@ public class Booking {
     private int bookingId = 0;
 
     @ColumnInfo(name="customerId")
-    private String customerId;
+    private int customerId;
 
     @ColumnInfo(name="flight_Id")
-    private int flightId;
+    private String flightId;
 
     @ColumnInfo(name="flight_Header")
     private String flightHeader;
 
     @ColumnInfo(name="departureDate")
-    private String departureDate;
+    @TypeConverters({DateConverter.class})
+    private Date departureDate;
 
     @ColumnInfo(name="arrivalDate")
-    private String arrivalDate;
+    @TypeConverters({DateConverter.class})
+    private  Date arrivalDate;
 
     @ColumnInfo(name="totalCost")
     private double totalCost;
+
+    @ColumnInfo(name="connectingFlight")
+    private String connectingFlight = "";
 
     //default constructor
     public Booking(){}
 
     //overloaded constructor
     @Ignore
-    public Booking(int bookingId, String customerId, int flightId, String flightHeader, String departureDate, String arrivalDate, double totalCost) {
+    public Booking(int bookingId, int customerId, String flightId, String flightHeader, Date departureDate, Date arrivalDate, double totalCost) {
         this.bookingId = bookingId;
         this.customerId = customerId;
         this.flightId = flightId;
@@ -54,15 +62,28 @@ public class Booking {
 
     //constructor without booking id
     @Ignore
-    public Booking(String customerId, int flightId , String flightHeader, String departureDate, String arrivalDate, double totalCost) {
+    public Booking(int customerId, String flightId , String flightHeader, Date departureDate, Date arrivalDate, double totalCost) {
         this.customerId = customerId;
         this.flightId = flightId;
         this.flightHeader = flightHeader;
         this.departureDate = departureDate;
         this.arrivalDate = arrivalDate;
         this.totalCost = totalCost;
-
     }
+
+    //constructor with connectingFlight
+    //no booking id
+    @Ignore
+    public Booking(int customerId, String flightId , String flightHeader, Date departureDate, Date arrivalDate, double totalCost, String connectingFlight) {
+        this.customerId = customerId;
+        this.flightId = flightId;
+        this.flightHeader = flightHeader;
+        this.departureDate = departureDate;
+        this.arrivalDate = arrivalDate;
+        this.totalCost = totalCost;
+        this.connectingFlight = connectingFlight;
+    }
+
 
     public int getBookingId() {
         return bookingId;
@@ -72,35 +93,35 @@ public class Booking {
         this.bookingId = bookingId;
     }
 
-    public String getCustomerId() {
+    public int getCustomerId() {
         return customerId;
     }
 
-    public void setCustomerId(String customerId) {
+    public void setCustomerId(int customerId) {
         this.customerId = customerId;
     }
 
-    public int getFlightId() {
+    public String getFlightId() {
         return flightId;
     }
 
-    public void setFlightId(int flightId) {
+    public void setFlightId(String flightId) {
         this.flightId = flightId;
     }
 
-    public String getDepartureDate() {
+    public Date getDepartureDate() {
         return departureDate;
     }
 
-    public void setDepartureDate(String departureDate) {
+    public void setDepartureDate(Date departureDate) {
         this.departureDate = departureDate;
     }
 
-    public String getArrivalDate() {
+    public Date getArrivalDate() {
         return arrivalDate;
     }
 
-    public void setArrivalDate(String arrivalDate) {
+    public void setArrivalDate(Date arrivalDate) {
         this.arrivalDate = arrivalDate;
     }
 
@@ -118,5 +139,13 @@ public class Booking {
 
     public void setFlightHeader(String flightHeader) {
         this.flightHeader = flightHeader;
+    }
+
+    public String getConnectingFlight() {
+        return connectingFlight;
+    }
+
+    public void setConnectingFlight(String connectingFlight) {
+        this.connectingFlight = connectingFlight;
     }
 }

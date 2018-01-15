@@ -6,9 +6,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.gbc.flightbooker.R;
+import com.gbc.flightbooker.db.Booking;
 import com.gbc.flightbooker.db.Flight;
 
 import java.util.ArrayList;
@@ -24,6 +26,7 @@ public class ExpandableFlightListAdapter extends BaseExpandableListAdapter {
     private Context context;
     private List<String> flightHeader;
     private HashMap<String, List<Flight>> flightChild;
+    Booking booking;
 
     public ExpandableFlightListAdapter(Context context, List<String> flightHeader,
                                        HashMap<String, List<Flight>> flightChild)
@@ -83,8 +86,8 @@ public class ExpandableFlightListAdapter extends BaseExpandableListAdapter {
     }
 
     @Override
-    public View getGroupView(int listPosition, boolean isExpanded,
-                            View convertView, ViewGroup parent)
+    public View getGroupView(final int listPosition, boolean isExpanded,
+                             View convertView, ViewGroup parent)
     {
         String headerTitle = (String)getGroup(listPosition);
         if(convertView == null)
@@ -95,6 +98,36 @@ public class ExpandableFlightListAdapter extends BaseExpandableListAdapter {
 
         TextView listHeader = (TextView) convertView.findViewById(R.id.expandedListHeader);
         listHeader.setText(headerTitle);
+
+/*
+        final  Button btn1 = (Button) convertView.findViewById(R.id.btn_book_flight);
+        if (isExpanded) {
+            btn1.setVisibility(View.VISIBLE);
+            btn1.setOnClickListener(new View.OnClickListener() {
+                @Override
+                    public void onClick(View view) {
+                    String header = flightHeader.get(listPosition);
+                    List<Flight> flights = flightChild[header];
+                    booking = new Booking();
+                    booking.setCustomerId(1);
+                    booking.setFlightId(flights.get(0).getFlightId());
+                    booking.setFlightHeader(header);
+                    booking.setDepartureDate(flights.get(0).getDepartureDate());
+                    if (flights.size() == 2) {
+                        booking.setArrivalDate(flights.get(1).getArrivalDate());
+                    }
+
+
+
+
+                }
+            });
+        }
+        else if (!isExpanded) {
+            btn1.setVisibility(View.INVISIBLE);
+        }
+*/
+
 
         return convertView;
     }
