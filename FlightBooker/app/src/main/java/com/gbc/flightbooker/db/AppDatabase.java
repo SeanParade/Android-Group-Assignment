@@ -12,7 +12,7 @@ import com.gbc.flightbooker.db.dao.*;
  * Created on 12/14/2017.
  */
 
-@Database(entities = {Customer.class, Booking.class, Flight.class}, version = 9, exportSchema = false)
+@Database(entities = {Customer.class, Booking.class, Flight.class}, version = 11, exportSchema = false)
 @TypeConverters({DateConverter.class})
 public abstract class AppDatabase extends RoomDatabase{
      private static AppDatabase INSTANCE;
