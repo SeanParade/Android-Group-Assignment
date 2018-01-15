@@ -33,8 +33,14 @@ public interface FlightDao {
     @Query("SELECT * FROM flight WHERE flightId = :id")
     Flight fetchFlightByID(String id);
 
-    @Query("SELECT * FROM flight WHERE finalDestination LIKE '%'||:destination||'%' AND departureDate BETWEEN :start AND :end ORDER BY :sortType")
-    List<Flight> fetchFlightByCityDate(String destination, Date start, Date end, String sortType);
+    @Query("SELECT * FROM flight WHERE finalDestination LIKE '%'||:destination||'%' AND departureDate BETWEEN :start AND :end ")
+    List<Flight> fetchFlightByCityDate(String destination, Date start, Date end);
+
+    @Query("SELECT * FROM flight WHERE finalDestination LIKE '%'||:destination||'%' AND departureDate BETWEEN :start AND :end ORDER BY duration")
+    List<Flight> fetchFlightByCityDateDuration(String destination, Date start, Date end);
+
+    @Query("SELECT * FROM flight WHERE finalDestination LIKE '%'||:destination||'%' AND departureDate BETWEEN :start AND :end ORDER BY totalCost")
+    List<Flight> fetchFlightByCityDateCost(String destination, Date start, Date end);
 
     @Query("Delete FROM flight WHERE flightId = :id")
     void deleteFlightByID(String id);

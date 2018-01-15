@@ -77,9 +77,8 @@ public class FlightSearchActivity extends Activity {
                         try
                         {
                             List<Flight> existingFlights =
-                                    Helper.flightsToDestinationByDay(destinationTxt,departureDate,db,"cost");
+                                    Helper.flightsToDestinationByDay(destinationTxt,departureDate,db,"duration");
                             List<Flight> flights = FlightGenerator.generateFlights(originTxt, destinationTxt, departureDate);
-                            List<Flight> tester = db.flightDao().fetchAllFlights();
                             if(existingFlights.isEmpty())
                             {
                                 db.flightDao().insertAll(flights);

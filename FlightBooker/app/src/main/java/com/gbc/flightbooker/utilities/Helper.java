@@ -113,7 +113,14 @@ public class Helper {
         departureDateEnd.set(Calendar.HOUR_OF_DAY, 0);
         departureDateEnd.add(Calendar.DAY_OF_MONTH, 1);
 
-        return db.flightDao().fetchFlightByCityDate(dest, departureDate.getTime(), departureDateEnd.getTime(), sortType);
+        if(sortType.equals("cost"))
+            return db.flightDao().fetchFlightByCityDateCost(dest, departureDate.getTime(), departureDateEnd.getTime());
+
+        if(sortType.equals("duration"))
+            return db.flightDao().fetchFlightByCityDateDuration(dest, departureDate.getTime(), departureDateEnd.getTime());
+
+        return db.flightDao().fetchFlightByCityDate(dest, departureDate.getTime(), departureDateEnd.getTime());
+
 
     }
 }

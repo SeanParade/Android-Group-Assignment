@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-import java.sql.Timestamp;
+
 
 public class FlightSelectionActivity extends Activity {
 
@@ -73,9 +73,6 @@ public class FlightSelectionActivity extends Activity {
                 return true;
             }
         });
-
-
-
     }
 
 
