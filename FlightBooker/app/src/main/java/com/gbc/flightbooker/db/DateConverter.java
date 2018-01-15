@@ -2,28 +2,25 @@ package com.gbc.flightbooker.db;
 
 import android.arch.persistence.room.TypeConverter;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.sql.Timestamp;
 
 /**
  * Created by nooran on 2017-12-20.
  */
 
 public class DateConverter {
-    static DateFormat df = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 
     @TypeConverter
-    public static Date fromString(String value){
+    public static Date fromTimestamp(Timestamp value){
         if(value!=null)
         {
             try{
-                return df.parse(value);
+                return new Date(value.getTime());
             }
-            catch(ParseException e)
+            catch(Exception e)
             {
-                //?
+                e.printStackTrace();
                 return null;
             }
         }
@@ -33,20 +30,19 @@ public class DateConverter {
     }
 
     @TypeConverter
-    public static String fromDate(Date value)
+    public static Long fromDate(Date value)
     {
-        String dateString = "";
         if(value!=null)
         {
             try{
-                dateString = df.format(value);
+                return value.getTime();
             }
             catch(Exception e)
             {
-                return dateString;
+                e.printStackTrace();
+                return null;
             }
-
         }
-        return dateString;
+        return null;
     }
 }

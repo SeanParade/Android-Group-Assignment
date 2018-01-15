@@ -11,10 +11,9 @@ import com.gbc.flightbooker.db.Flight;
 import com.gbc.flightbooker.utilities.ExpandableFlightListAdapter;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
+import java.sql.Timestamp;
 
 public class FlightSelectionActivity extends Activity {
 
