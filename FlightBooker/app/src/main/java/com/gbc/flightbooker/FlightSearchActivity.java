@@ -17,9 +17,7 @@ import com.gbc.flightbooker.db.Flight;
 import com.gbc.flightbooker.utilities.FlightGenerator;
 import com.gbc.flightbooker.utilities.Helper;
 
-import java.time.Instant;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
+import java.sql.Timestamp;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -31,8 +29,7 @@ public class FlightSearchActivity extends Activity {
     EditText origin, destination;
     String originTxt, destinationTxt, feedback;
     DatePicker datePicker;
-    Date departureDate, d;
-    Calendar startDate, endDate;
+    Date today, departureDate;
     Button searchBtn;
     RadioGroup sortByRadioGroup;
 
@@ -49,7 +46,8 @@ public class FlightSearchActivity extends Activity {
         sortByRadioGroup = findViewById(R.id.radio_group);
         searchBtn = findViewById(R.id.submit_button);
 
-        d = new Date();
+
+        today = new Date();
 
 
         searchBtn.setOnClickListener(new View.OnClickListener() {
@@ -58,11 +56,8 @@ public class FlightSearchActivity extends Activity {
                 Log.d("Flight Search Activity\n", "Search button pressed");
                 originTxt =  Helper.txtFromEditText(origin);
                 destinationTxt =  Helper.txtFromEditText(destination);
+                // create time stamp from date picker
                 departureDate = getPickerDate(datePicker);
-/*                startDate.setTime(departureDate);
-                startDate.add(Calendar.DATE, -1);
-                endDate.setTime(departureDate);
-                endDate.add(Calendar.DATE, 1); // adding a day to departure time for db check*/
 
                 feedback = "";
 
@@ -70,7 +65,7 @@ public class FlightSearchActivity extends Activity {
                     feedback = "Origin City is Empty! ";
                 if(destinationTxt.equals(""))
                     feedback += "Destination City Empty! ";
-                if (d.after(departureDate))
+                if (today.after(departureDate))
                     feedback += "Departure date is before today! ";
 
                 if(!feedback.equals("")){
@@ -82,7 +77,7 @@ public class FlightSearchActivity extends Activity {
                         try
                         {
                             List<Flight> existingFlights =
-                                    db.flightDao().fetchFlightByCityDate(destinationTxt, departureDate.toString());
+                                    Helper.flightsToDestinationByDay(destinationTxt,departureDate,db,"cost");
                             List<Flight> flights = FlightGenerator.generateFlights(originTxt, destinationTxt, departureDate);
                             List<Flight> tester = db.flightDao().fetchAllFlights();
                             if(existingFlights.isEmpty())
@@ -96,6 +91,8 @@ public class FlightSearchActivity extends Activity {
                             String sortType = selected.getText().toString().toLowerCase();
                             Intent intent = new Intent(v.getContext(), FlightSelectionActivity.class);
                             intent.putExtra("sorttype", sortType);
+                            intent.putExtra("dest", destinationTxt);
+                            intent.putExtra("depDate", departureDate.getTime());
                             startActivity(intent);
 
                         }

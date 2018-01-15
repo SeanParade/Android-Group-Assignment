@@ -78,6 +78,7 @@ public class FlightGenerator {
                         airline, departure, arrival, origin,
                         DESTIN1, duration, cost);
                 flight.setTotalCost(cost);
+                flight.setFinalDestination(flight.getDestination());
                 flights.add(flight);
             }
             else //connecting flight
@@ -107,6 +108,8 @@ public class FlightGenerator {
                 double totalCost = flight1.getCost() + flight2.getCost();
                 flight1.setTotalCost(totalCost);
                 flight2.setTotalCost(totalCost);
+                flight1.setFinalDestination(flight2.getDestination());
+                flight2.setFinalDestination(flight2.getDestination());
                 flights.add(flight1);
                 flights.add(flight2);
             }
