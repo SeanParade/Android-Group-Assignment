@@ -12,7 +12,7 @@ import java.util.Date;
  */
 
 public class DateConverter {
-    static DateFormat df = new SimpleDateFormat("dd/mm/yyyy HH:mm:ss");
+    static DateFormat df = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 
     @TypeConverter
     public static Date fromString(String value){

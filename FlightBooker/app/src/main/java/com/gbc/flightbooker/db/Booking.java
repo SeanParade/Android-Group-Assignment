@@ -20,7 +20,7 @@ public class Booking {
     private int bookingId = 0;
 
     @ColumnInfo(name="customerId")
-    private int customerId;
+    private String customerId;
 
     @ColumnInfo(name="flight_Id")
     private int flightId;
@@ -42,7 +42,7 @@ public class Booking {
 
     //overloaded constructor
     @Ignore
-    public Booking(int bookingId, int customerId, int flightId, String flightHeader, String departureDate, String arrivalDate, double totalCost) {
+    public Booking(int bookingId, String customerId, int flightId, String flightHeader, String departureDate, String arrivalDate, double totalCost) {
         this.bookingId = bookingId;
         this.customerId = customerId;
         this.flightId = flightId;
@@ -54,7 +54,7 @@ public class Booking {
 
     //constructor without booking id
     @Ignore
-    public Booking(int customerId, int flightId , String flightHeader, String departureDate, String arrivalDate, double totalCost) {
+    public Booking(String customerId, int flightId , String flightHeader, String departureDate, String arrivalDate, double totalCost) {
         this.customerId = customerId;
         this.flightId = flightId;
         this.flightHeader = flightHeader;
@@ -72,11 +72,11 @@ public class Booking {
         this.bookingId = bookingId;
     }
 
-    public int getCustomerId() {
+    public String getCustomerId() {
         return customerId;
     }
 
-    public void setCustomerId(int customerId) {
+    public void setCustomerId(String customerId) {
         this.customerId = customerId;
     }
 

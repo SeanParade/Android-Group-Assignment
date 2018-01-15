@@ -4,13 +4,14 @@ import android.arch.persistence.room.Database;
 import android.arch.persistence.room.Room;
 import android.arch.persistence.room.RoomDatabase;
 import android.content.Context;
+import android.util.Log;
 
 import com.gbc.flightbooker.db.dao.*;
 /**
  * Created on 12/14/2017.
  */
 
-@Database(entities = {Customer.class, Booking.class, Flight.class}, version = 4, exportSchema = false)
+@Database(entities = {Customer.class, Booking.class, Flight.class}, version = 6, exportSchema = false)
 public abstract class AppDatabase extends RoomDatabase{
      private static AppDatabase INSTANCE;
 

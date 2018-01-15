@@ -74,9 +74,10 @@ public class FlightGenerator {
                 String airline = airlines.get(departureTimes.indexOf(time));
                 double cost = calculateCost(duration, airline);
 
-                Flight flight = new Flight(createRandomId(false),
+                Flight flight = new Flight(createRandomId(),
                         airline, departure, arrival, origin,
-                        destination, duration, cost);
+                        DESTIN1, duration, cost);
+                flight.setTotalCost(cost);
                 flights.add(flight);
             }
             else //connecting flight
@@ -86,12 +87,12 @@ public class FlightGenerator {
                 String airline = airlines.get(departureTimes.indexOf(time));
                 double cost = calculateCost(duration, airline);
 
-                Flight flight = new Flight(createRandomId(false),
-                        airline, departure, arrival, origin,
-                        destination, duration, cost);
-                flight.setConnectingFlight(flight.getFlightId() + "-c");
+                Flight flight1 = new Flight(createRandomId(),
+                        airline, departure, arrival, ORIGIN,
+                        DESTIN1, duration, cost);
+                flight1.setConnectingFlight(flight1.getFlightId() + "-c");
 
-                flights.add(flight);
+
 
                 duration = calculateDuration(DESTIN1, DESTIN2); //create connecting flight
                 Date connDeparture = Helper.addTime(arrival, "00:45"); //set departure time to after arrival of first flight
@@ -99,11 +100,15 @@ public class FlightGenerator {
                 airline = airlines.get(departureTimes.indexOf(time));
                 cost = calculateCost(duration, airline);
 
-                flight = new Flight(createRandomId(true),
-                        airline, connDeparture, arrival, origin,
-                        destination, duration, cost);
+                Flight flight2 = new Flight(flight1.getConnectingFlight(),
+                        airline, connDeparture, arrival, DESTIN1,
+                        DESTIN2, duration, cost);
 
-                flights.add(flight);
+                double totalCost = flight1.getCost() + flight2.getCost();
+                flight1.setTotalCost(totalCost);
+                flight2.setTotalCost(totalCost);
+                flights.add(flight1);
+                flights.add(flight2);
             }
 
         }
@@ -144,7 +149,7 @@ public class FlightGenerator {
         if (airline.equals(AIRLINE1)) {
             rate = 40;
         } else if (airline.equals(AIRLINE2)) {
-            rate = 45;
+            rate = 55;
         } else {
             rate = 35;
         }
@@ -154,27 +159,16 @@ public class FlightGenerator {
         return cost;
     }
 
-    //used as sentinel value for id generator to copy id for connecting flight
-    private static String previousId;
-    // Flight id generator
-    private static String createRandomId(Boolean connectingFlight)
-    {
-        String id = previousId;
-        if(!connectingFlight)
-        {
-            // generate random human-readable hash id
-            Long seed = ThreadLocalRandom.current().nextLong(900000000000L);
-            Long salt = System.currentTimeMillis() / 1000;
-            Hashids hasher = new Hashids(salt.toString());
-            id = hasher.encode(seed);
-            previousId = id;
-        }
-        if(connectingFlight)
-        {
-            //appends -c to the id of the first flight. Used in booking logic.
-            return id + "-c";
-        }
 
-        return id;
+
+    // Flight id generator
+    private static String createRandomId()
+    {
+        // generate random human-readable hash id
+        Long seed = ThreadLocalRandom.current().nextLong(900000000000L);
+        Long salt = System.currentTimeMillis() / 1000;
+        Hashids hasher = new Hashids(salt.toString());
+
+        return hasher.encode(seed);
     }
 }

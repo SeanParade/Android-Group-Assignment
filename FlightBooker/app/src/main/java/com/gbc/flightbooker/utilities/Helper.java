@@ -3,13 +3,19 @@ package com.gbc.flightbooker.utilities;
 import android.util.Log;
 import android.widget.EditText;
 
+import com.gbc.flightbooker.db.Flight;
+
 import java.util.Base64;
 import java.util.Calendar;
 import java.text.DateFormat;
 import java.text.ParseException;
+import java.util.Comparator;
 import java.util.Date;
 import java.text.SimpleDateFormat;
+import java.util.List;
+import java.util.Map;
 import java.util.Random;
+import java.util.TreeMap;
 
 /**
  * Created by nooran on 2017-12-16.
@@ -97,4 +103,6 @@ public class Helper {
     {
         return et.getText().toString().trim();
     }
+
+
 }

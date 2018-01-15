@@ -11,6 +11,8 @@ import com.gbc.flightbooker.db.Flight;
 import com.gbc.flightbooker.utilities.ExpandableFlightListAdapter;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 
@@ -41,7 +43,7 @@ public class FlightSelectionActivity extends Activity {
     if(sortType.equals("cost"))
     {
         //get flights from database with date sorted by cost
-        flights = db.flightDao().fetchAllFlightsByCost();
+        flights = db.flightDao().fetchAllFlightsByTotalCost();
     }
     else
     {
@@ -72,14 +74,29 @@ public class FlightSelectionActivity extends Activity {
             }
         });
 
+    }
 
-
+    @Override
+    protected void onResume() {
+        super.onResume();
+        flights = null;
+        if(sortType.equals("cost"))
+        {
+            //get flights from database with date sorted by cost
+            flights = db.flightDao().fetchAllFlightsByTotalCost();
+        }
+        else
+        {
+            //get flights from database with date sorted by duration
+            flights = db.flightDao().fetchAllFlights();
+        }
+        prepareListData(flights);
     }
 
     private void prepareListData(List<Flight> flights)
     {
-        flightHeader = new ArrayList<String>();
-        flightChild = new HashMap<String, List<Flight>>();
+        flightHeader = new ArrayList<>();
+        flightChild = new HashMap<>();
 
         for( Flight flight: flights)
         {

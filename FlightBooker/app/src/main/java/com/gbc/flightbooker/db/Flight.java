@@ -43,6 +43,9 @@ public class Flight {
     @ColumnInfo(name="cost")
     private double cost;
 
+    @ColumnInfo(name="totalCost")
+    private double totalCost;
+
     @ColumnInfo(name="connectingFlight")
     private String connectingFlight = "";
 
@@ -103,6 +106,14 @@ public class Flight {
         this.duration = duration;
         this.cost = cost;
         this.connectingFlight = connectingFlight;
+    }
+
+    public double getTotalCost() {
+        return totalCost;
+    }
+
+    public void setTotalCost(double totalCost) {
+        this.totalCost = totalCost;
     }
 
     public String getFlightId() {

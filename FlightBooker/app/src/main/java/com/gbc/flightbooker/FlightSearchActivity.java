@@ -17,6 +17,9 @@ import com.gbc.flightbooker.db.Flight;
 import com.gbc.flightbooker.utilities.FlightGenerator;
 import com.gbc.flightbooker.utilities.Helper;
 
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -29,6 +32,7 @@ public class FlightSearchActivity extends Activity {
     String originTxt, destinationTxt, feedback;
     DatePicker datePicker;
     Date departureDate, d;
+    Calendar startDate, endDate;
     Button searchBtn;
     RadioGroup sortByRadioGroup;
 
@@ -55,6 +59,11 @@ public class FlightSearchActivity extends Activity {
                 originTxt =  Helper.txtFromEditText(origin);
                 destinationTxt =  Helper.txtFromEditText(destination);
                 departureDate = getPickerDate(datePicker);
+/*                startDate.setTime(departureDate);
+                startDate.add(Calendar.DATE, -1);
+                endDate.setTime(departureDate);
+                endDate.add(Calendar.DATE, 1); // adding a day to departure time for db check*/
+
                 feedback = "";
 
                 if(originTxt.equals(""))
@@ -72,9 +81,10 @@ public class FlightSearchActivity extends Activity {
                     {
                         try
                         {
+                            List<Flight> existingFlights =
+                                    db.flightDao().fetchFlightByCityDate(destinationTxt, departureDate.toString());
                             List<Flight> flights = FlightGenerator.generateFlights(originTxt, destinationTxt, departureDate);
-                            List<Flight> existingFlights = db.flightDao().fetchFlightByCityDate(originTxt, departureDate.toString());
-
+                            List<Flight> tester = db.flightDao().fetchAllFlights();
                             if(existingFlights.isEmpty())
                             {
                                 db.flightDao().insertAll(flights);
