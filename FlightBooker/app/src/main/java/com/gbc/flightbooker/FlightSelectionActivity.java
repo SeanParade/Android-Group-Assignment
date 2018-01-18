@@ -3,7 +3,6 @@ package com.gbc.flightbooker;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
 import android.widget.Toast;
@@ -38,6 +37,7 @@ public class FlightSelectionActivity extends Activity {
 
         db = AppDatabase.getDatabase(getApplicationContext());
         Bundle extras = getIntent().getExtras();
+        // get extras from last activity and use them to pull flights from db
         try {
             sortType = extras.getString("sorttype");
             dest = extras.getString("dest");
@@ -118,6 +118,7 @@ public class FlightSelectionActivity extends Activity {
     }
 
     private String connectingFlightHeader(Flight flight1, Flight flight2)
+    // Generates the header for the flight listing
     {
         Double cost = flight1.getCost() + flight2.getCost();
         String totalDuration = flight1.getTotalDuration();

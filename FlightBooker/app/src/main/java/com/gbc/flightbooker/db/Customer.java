@@ -29,6 +29,15 @@ public class Customer {
     @ColumnInfo(name="credit")
     private String creditCardNumber;
 
+    @ColumnInfo(name="billingFirstName")
+    private String billingFirstName;
+
+    @ColumnInfo(name="billingLastName")
+    private String billingLastName;
+
+    @ColumnInfo(name="billingAddress")
+    private String billingAddress;
+
     public Customer(){}
 
     //overloaded constructor
@@ -41,6 +50,18 @@ public class Customer {
         this.address = address;
         this.phone = phone;
         this.creditCardNumber = creditCardNumber;
+    }
+
+    public Customer(String firstName, String lastName, String address, String phone, String creditCardNumber, String billingFirstName, String billingLastName, String billingAddress) {
+        this.customerId = 1;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.address = address;
+        this.phone = phone;
+        this.creditCardNumber = creditCardNumber;
+        this.billingFirstName = billingFirstName;
+        this.billingLastName = billingLastName;
+        this.billingAddress = billingAddress;
     }
 
     public int getCustomerId() {
@@ -89,5 +110,29 @@ public class Customer {
 
     public void setCreditCardNumber(String creditCardNumber) {
         this.creditCardNumber = creditCardNumber;
+    }
+
+    public String getBillingFirstName() {
+        return billingFirstName;
+    }
+
+    public void setBillingFirstName(String billingFirstName) {
+        this.billingFirstName = billingFirstName;
+    }
+
+    public String getBillingLastName() {
+        return billingLastName;
+    }
+
+    public void setBillingLastName(String billingLastName) {
+        this.billingLastName = billingLastName;
+    }
+
+    public String getBillingAddress() {
+        return billingAddress;
+    }
+
+    public void setBillingAddress(String billingAddress) {
+        this.billingAddress = billingAddress;
     }
 }

@@ -111,11 +111,12 @@ public class Helper {
         departureDateEnd.setTime(day);
         departureDate.set(Calendar.HOUR_OF_DAY, 0);
         departureDateEnd.set(Calendar.HOUR_OF_DAY, 0);
+        // make the search range from n days to n+1 days
         departureDateEnd.add(Calendar.DAY_OF_MONTH, 1);
-
+        // sorted by cost
         if(sortType.equals("cost"))
             return db.flightDao().fetchFlightByCityDateCost(dest, departureDate.getTime(), departureDateEnd.getTime());
-
+        // sorted by duration
         if(sortType.equals("duration"))
             return db.flightDao().fetchFlightByCityDateDuration(dest, departureDate.getTime(), departureDateEnd.getTime());
 

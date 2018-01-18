@@ -17,7 +17,6 @@ import com.gbc.flightbooker.db.Flight;
 import com.gbc.flightbooker.utilities.FlightGenerator;
 import com.gbc.flightbooker.utilities.Helper;
 
-import java.sql.Timestamp;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -60,7 +59,7 @@ public class FlightSearchActivity extends Activity {
                 departureDate = getPickerDate(datePicker);
 
                 feedback = "";
-
+                // check if fields valid and give feedback if not
                 if(originTxt.equals(""))
                     feedback = "Origin City is Empty! ";
                 if(destinationTxt.equals(""))
@@ -76,15 +75,18 @@ public class FlightSearchActivity extends Activity {
                     {
                         try
                         {
+                            // check for existing flights meeting criteria
                             List<Flight> existingFlights =
                                     Helper.flightsToDestinationByDay(destinationTxt,departureDate,db,"duration");
+                            // generate flights with that criteria
                             List<Flight> flights = FlightGenerator.generateFlights(originTxt, destinationTxt, departureDate);
                             if(existingFlights.isEmpty())
                             {
+                                //if no flights, insert generated flights
                                 db.flightDao().insertAll(flights);
                                 Log.d("FlightSearchActivity", "Flights inserted.");
                             }
-
+                            // get sort type and pass parameter to selection activity in extra
                             int selectedID = sortByRadioGroup.getCheckedRadioButtonId();
                             RadioButton selected = findViewById(selectedID);
                             String sortType = selected.getText().toString().toLowerCase();
