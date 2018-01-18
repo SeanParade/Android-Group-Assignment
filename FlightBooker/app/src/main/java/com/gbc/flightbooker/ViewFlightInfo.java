@@ -25,7 +25,7 @@ public class ViewFlightInfo extends Activity {
         setContentView(R.layout.activity_view_flight_info);
 
         Bundle extras = getIntent().getExtras();
-        flightId = extras.getString("flightId");
+        flightId = extras.getString("flightID");
         db = AppDatabase.getDatabase(getApplicationContext());
 
         //Grab Flight by ID. Add it to the list.

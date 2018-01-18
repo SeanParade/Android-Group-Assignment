@@ -1,6 +1,7 @@
 package com.gbc.flightbooker.utilities;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,8 +9,11 @@ import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.gbc.flightbooker.MenuActivity;
 import com.gbc.flightbooker.R;
+import com.gbc.flightbooker.db.AppDatabase;
 import com.gbc.flightbooker.db.Booking;
 import com.gbc.flightbooker.db.Flight;
 
@@ -27,6 +31,7 @@ public class ExpandableFlightListAdapter extends BaseExpandableListAdapter {
     private List<String> flightHeader;
     private HashMap<String, List<Flight>> flightChild;
     Booking booking;
+    AppDatabase db;
 
     public ExpandableFlightListAdapter(Context context, List<String> flightHeader,
                                        HashMap<String, List<Flight>> flightChild)
@@ -99,15 +104,15 @@ public class ExpandableFlightListAdapter extends BaseExpandableListAdapter {
         TextView listHeader = (TextView) convertView.findViewById(R.id.expandedListHeader);
         listHeader.setText(headerTitle);
 
-/*
-        final  Button btn1 = (Button) convertView.findViewById(R.id.btn_book_flight);
+
+        Button btn1 = (Button) convertView.findViewById(R.id.btn_book_flight);
         if (isExpanded) {
             btn1.setVisibility(View.VISIBLE);
             btn1.setOnClickListener(new View.OnClickListener() {
                 @Override
                     public void onClick(View view) {
                     String header = flightHeader.get(listPosition);
-                    List<Flight> flights = flightChild[header];
+                    List<Flight> flights = flightChild.get(header);
                     booking = new Booking();
                     booking.setCustomerId(1);
                     booking.setFlightId(flights.get(0).getFlightId());
@@ -115,7 +120,18 @@ public class ExpandableFlightListAdapter extends BaseExpandableListAdapter {
                     booking.setDepartureDate(flights.get(0).getDepartureDate());
                     if (flights.size() == 2) {
                         booking.setArrivalDate(flights.get(1).getArrivalDate());
+                        booking.setTotalCost(flights.get(0).getTotalCost() + flights.get(1).getTotalCost());
+                        booking.setConnectingFlight(flights.get(0).getConnectingFlight());
+                    }else
+                    {
+                        booking.setArrivalDate(flights.get(0).getArrivalDate());
+                        booking.setTotalCost(flights.get(0).getTotalCost());
                     }
+                    db = AppDatabase.getDatabase(view.getContext());
+                    db.bookingDao().insert(booking);
+
+                    Toast.makeText(view.getContext(), "Flight booked!", Toast.LENGTH_SHORT).show();
+
 
 
 
@@ -126,7 +142,7 @@ public class ExpandableFlightListAdapter extends BaseExpandableListAdapter {
         else if (!isExpanded) {
             btn1.setVisibility(View.INVISIBLE);
         }
-*/
+
 
 
         return convertView;

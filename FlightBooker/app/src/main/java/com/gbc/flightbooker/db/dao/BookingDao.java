@@ -19,6 +19,9 @@ public interface BookingDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertAll(List<Booking> booking);
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    void insert(Booking booking);
+
     @Delete
     void deleteBookings(Booking... bookings);
 
