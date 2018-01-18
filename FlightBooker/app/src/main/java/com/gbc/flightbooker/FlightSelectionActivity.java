@@ -120,7 +120,7 @@ public class FlightSelectionActivity extends Activity {
     private String connectingFlightHeader(Flight flight1, Flight flight2)
     {
         Double cost = flight1.getCost() + flight2.getCost();
-        String totalDuration = Helper.calculateTotalDuration(flight1, flight2);
+        String totalDuration = flight1.getTotalDuration();
         String header = "From ";
         header += flight1.getOrigin() + " To " + flight2.getDestination() + " Duration: " + totalDuration + " Cost: $" + cost;
         return header;

@@ -52,6 +52,9 @@ public class Flight {
     @ColumnInfo(name="finalDestination")
     private String finalDestination = "";
 
+    @ColumnInfo(name="totalDuration")
+    private String totalDuration;
+
     public Flight(){}
 
     //overloaded constructor
@@ -194,6 +197,12 @@ public class Flight {
     public void setFinalDestination(String finalDestination) {
         this.finalDestination = finalDestination;
     }
+    public String getTotalDuration(){
+        return totalDuration;
+    }
+    public void setTotalDuration(String totalDuration){
+        this.totalDuration = totalDuration;
+    }
 
     @Ignore
     public String getFlightHeader()
@@ -213,6 +222,21 @@ public class Flight {
                 "Arrival Date: " + Helper.dateToString(this.getArrivalDate()) + " at " + Helper.timeToString(this.getArrivalDate()) + "\n" +
                 "Duration: " + this.getDuration() + " minutes" + "\n Cost: " + this.getCost() + "\n";
         return detail;
+    }
+    @Ignore
+    public String calculateTotalDuration(Flight flight2)
+    {
+        String layover = "00:45:00";
+        String duration1 = this.getDuration();
+        String duration2 = flight2.getDuration();
+
+        Date flightDuration = Helper.stringToTime(duration1);
+
+        Date newTime = Helper.addTime(flightDuration, layover);
+        newTime = Helper.addTime(newTime, duration2);
+
+        return Helper.timeToString(newTime);
+
     }
 
 }

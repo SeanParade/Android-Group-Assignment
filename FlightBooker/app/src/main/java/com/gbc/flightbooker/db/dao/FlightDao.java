@@ -36,7 +36,7 @@ public interface FlightDao {
     @Query("SELECT * FROM flight WHERE finalDestination LIKE '%'||:destination||'%' AND departureDate BETWEEN :start AND :end ")
     List<Flight> fetchFlightByCityDate(String destination, Date start, Date end);
 
-    @Query("SELECT * FROM flight WHERE finalDestination LIKE '%'||:destination||'%' AND departureDate BETWEEN :start AND :end ORDER BY duration")
+    @Query("SELECT * FROM flight WHERE finalDestination LIKE '%'||:destination||'%' AND departureDate BETWEEN :start AND :end ORDER BY totalDuration")
     List<Flight> fetchFlightByCityDateDuration(String destination, Date start, Date end);
 
     @Query("SELECT * FROM flight WHERE finalDestination LIKE '%'||:destination||'%' AND departureDate BETWEEN :start AND :end ORDER BY totalCost")
