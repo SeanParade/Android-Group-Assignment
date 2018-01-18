@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 import org.hashids.*;
 
@@ -126,19 +127,42 @@ public class FlightGenerator {
     //calculate duration based on origin and destination
     private static String calculateDuration(String origin, String destination) {
         String duration = "";
+        Random random = new Random();
+        int randomInt = random.nextInt(3);
         //if statements to determine duration
         if (origin.equals(ORIGIN) && destination.equals(DESTIN1)) //toronto to chicago
         {
-            //3 hours 15 minutes
-            duration = "01:20:00";
+            switch(randomInt) {
+                case 0: duration = "01:20:00";
+                    break;
+                case 1: duration = "01:30:00";
+                    break;
+                case 2: duration = "01:44:00";
+                    break;
+                default: duration = "01:30:00";
+            }
         } else if (origin.equals(ORIGIN) && destination.equals(DESTIN2)) //toronto to Miami
         {
-            //4 hours 30 minutes
-            duration = "04:30:00";
+            switch(randomInt) {
+                case 0: duration = "04:20:00";
+                    break;
+                case 1: duration = "04:45:00";
+                    break;
+                case 2: duration = "05:20:00";
+                    break;
+                default: duration = "04:30:00";
+            }
         } else if (origin.equals(DESTIN1) && destination.equals(DESTIN2)) //chicago to miami
         {
-            //3 hours 00 minutes
-            duration = "03:00:00";
+            switch(randomInt) {
+                case 0: duration = "03:12:00";
+                    break;
+                case 1: duration = "03:33:00";
+                    break;
+                case 2: duration = "04:15:00";
+                    break;
+                default: duration = "03:00:00";
+            }
         }
         return duration;
     }

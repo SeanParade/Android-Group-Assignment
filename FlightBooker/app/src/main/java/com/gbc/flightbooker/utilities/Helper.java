@@ -123,5 +123,19 @@ public class Helper {
 
 
     }
+    public static String calculateTotalDuration(Flight flight1, Flight flight2)
+    {
+        String layover = "00:45:00";
+        String duration1 = flight1.getDuration();
+        String duration2 = flight2.getDuration();
+
+        Date flightDuration = stringToTime(duration1);
+
+        Date newTime = addTime(flightDuration, layover);
+        newTime = addTime(newTime, duration2);
+
+        return timeToString(newTime);
+
+    }
 }
 
