@@ -28,10 +28,10 @@ public interface BookingDao {
     @Query("SELECT * FROM booking")
     List<Booking> fetchAllBookings();
 
-    @Query("SELECT * FROM booking WHERE bookingId = :id")
-    List<Booking> fetchBookingByID(int id);
+    @Query("SELECT * FROM booking WHERE flight_Id = :id")
+    List<Booking> fetchBookingByID(String id);
 
-    @Query("Delete FROM booking WHERE bookingId = :id")
-    void deleteBookingByID(int id);
+    @Query("Delete FROM booking WHERE flight_Id = :id")
+    void deleteBookingByID(String id);
 
 }

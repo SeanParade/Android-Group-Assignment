@@ -113,25 +113,32 @@ public class ExpandableFlightListAdapter extends BaseExpandableListAdapter {
                     public void onClick(View view) {
                     String header = flightHeader.get(listPosition);
                     List<Flight> flights = flightChild.get(header);
-                    booking = new Booking();
-                    booking.setCustomerId(1);
-                    booking.setFlightId(flights.get(0).getFlightId());
-                    booking.setFlightHeader(header);
-                    booking.setDepartureDate(flights.get(0).getDepartureDate());
-                    if (flights.size() == 2) {
-                        booking.setArrivalDate(flights.get(1).getArrivalDate());
-                        booking.setTotalCost(flights.get(0).getTotalCost() + flights.get(1).getTotalCost());
-                        booking.setConnectingFlight(flights.get(0).getConnectingFlight());
-                    }else
-                    {
-                        booking.setArrivalDate(flights.get(0).getArrivalDate());
-                        booking.setTotalCost(flights.get(0).getTotalCost());
-                    }
                     db = AppDatabase.getDatabase(view.getContext());
-                    db.bookingDao().insert(booking);
+                    //Check if booking exists
+                    List<Booking> isBooked = db.bookingDao().fetchBookingByID(flights.get(0).getFlightId());
+                    if (isBooked.isEmpty()) {
 
-                    Toast.makeText(view.getContext(), "Flight booked!", Toast.LENGTH_SHORT).show();
+                        booking = new Booking();
+                        booking.setCustomerId(1);
+                        booking.setFlightId(flights.get(0).getFlightId());
+                        booking.setFlightHeader(header);
+                        booking.setDepartureDate(flights.get(0).getDepartureDate());
+                        if (flights.size() == 2) {
+                            booking.setArrivalDate(flights.get(1).getArrivalDate());
+                            booking.setTotalCost(flights.get(0).getTotalCost() + flights.get(1).getTotalCost());
+                            booking.setConnectingFlight(flights.get(0).getConnectingFlight());
+                        } else {
+                            booking.setArrivalDate(flights.get(0).getArrivalDate());
+                            booking.setTotalCost(flights.get(0).getTotalCost());
+                        }
 
+                        db.bookingDao().insert(booking);
+
+                        Toast.makeText(view.getContext(), "Flight booked!", Toast.LENGTH_SHORT).show();
+                    }
+                    else {
+                        Toast.makeText(view.getContext(), "You have already booked that flight", Toast.LENGTH_SHORT).show();
+                    }
 
 
 
