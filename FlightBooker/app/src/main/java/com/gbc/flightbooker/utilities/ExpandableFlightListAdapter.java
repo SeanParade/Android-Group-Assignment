@@ -104,20 +104,38 @@ public class ExpandableFlightListAdapter extends BaseExpandableListAdapter {
         TextView listHeader = (TextView) convertView.findViewById(R.id.expandedListHeader);
         listHeader.setText(headerTitle);
 
-
+        /*
+        * When a Flight is selected from the Flight Search activity
+        * The list expands and shows the detail for the flight(s)
+        * This lets you book that flight when you click the Book Flight button
+        */
         Button btn1 = (Button) convertView.findViewById(R.id.btn_book_flight);
+
+        //When group expanded make button visible
         if (isExpanded) {
             btn1.setVisibility(View.VISIBLE);
             btn1.setOnClickListener(new View.OnClickListener() {
                 @Override
                     public void onClick(View view) {
+
+                    //Grab header from the flight that was clicked on
                     String header = flightHeader.get(listPosition);
+
+                    //Get the list of flights by searching the hashmap keys
+                    //The key for the hashmap is a string that contains the flight header
                     List<Flight> flights = flightChild.get(header);
                     db = AppDatabase.getDatabase(view.getContext());
-                    //Check if booking exists
-                    List<Booking> isBooked = db.bookingDao().fetchBookingByID(flights.get(0).getFlightId());
-                    if (isBooked.isEmpty()) {
 
+                    //Check if booking exists
+                    //Prevents duplicates
+                    List<Booking> isBooked = db.bookingDao().fetchBookingByID(flights.get(0).getFlightId());
+                    //If not booked
+                   if (isBooked.isEmpty()) {
+
+                       //Create new booking object
+                       //If there is a connecting flight get the arrival date, add the costs of both flights
+                       //and add the connecting Flight ID to the booking obejct
+                       //Push to DB and let the user know they were successful
                         booking = new Booking();
                         booking.setCustomerId(1);
                         booking.setFlightId(flights.get(0).getFlightId());
@@ -146,6 +164,7 @@ public class ExpandableFlightListAdapter extends BaseExpandableListAdapter {
                 }
             });
         }
+        //Hide button when group is closed
         else if (!isExpanded) {
             btn1.setVisibility(View.INVISIBLE);
         }

@@ -19,6 +19,8 @@ public class ViewFlightInfo extends Activity {
     Flight flight;
     String flightId;
 
+    //Displays the flight info (and connecting flight info if there is one)
+    // when a booking is selected
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

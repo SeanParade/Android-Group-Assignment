@@ -36,6 +36,7 @@ public class MenuActivity extends Activity {
         Button viewBookingsBtn = findViewById(R.id.view_bookings);
         Button userInformationBtn = findViewById(R.id.user_information);
 
+        //Opens correct activity depending on button pressed
         bookflightBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
